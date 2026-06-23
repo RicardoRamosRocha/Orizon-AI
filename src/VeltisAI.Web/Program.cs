@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using VeltisAI.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using VeltisAI.Infrastructure.Identity;
+using VeltisAI.Infrastructure.Seed;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,7 +45,13 @@ app.UseAuthorization();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+await IdentitySeeder.SeedAsync(app.Services);  
 
 app.Run();
