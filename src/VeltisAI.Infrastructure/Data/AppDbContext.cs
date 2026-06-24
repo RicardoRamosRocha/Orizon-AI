@@ -17,5 +17,6 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Customer> Customers => Set<Customer>();
 
+    public DbSet<Plan> Plans => Set<Plan>();
     
 }
