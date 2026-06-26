@@ -1,5 +1,3 @@
-namespace VeltisAI.Domain.Entities;
-
 public class Plan
 {
     public Guid Id { get; set; }
@@ -11,6 +9,10 @@ public class Plan
     public decimal MonthlyPrice { get; set; }
 
     public int CreditsIncluded { get; set; }
+
+    public int MaxUsers { get; set; }
+
+    public int MaxTokensPerMonth { get; set; }
 
     public bool Active { get; set; } = true;
 
