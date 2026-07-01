@@ -22,6 +22,10 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Plan> Plans => Set<Plan>();
 
+    public DbSet<Subscription> Subscriptions => Set<Subscription>();
+
+    public DbSet<CreditTransaction> CreditTransactions => Set<CreditTransaction>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -36,5 +40,27 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             .WithMany()
             .HasForeignKey(x => x.AccountId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Subscription>()
+            .HasOne(x => x.Account)
+            .WithMany()
+            .HasForeignKey(x => x.AccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Subscription>()
+            .HasOne(x => x.Plan)
+            .WithMany()
+            .HasForeignKey(x => x.PlanId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<CreditTransaction>()
+            .HasOne(x => x.Account)
+            .WithMany()
+            .HasForeignKey(x => x.AccountId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<CreditTransaction>()
+            .Property(x => x.Amount)
+            .HasPrecision(18, 2);
     }
 }
