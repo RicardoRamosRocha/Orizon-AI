@@ -2,220 +2,237 @@
 
 ## Documento 03 – Product Backlog
 
-**Versão:** 1.0
-**Data:** Junho/2026
+**Versão:** 1.1  
+**Data:** Julho/2026  
 **Status:** Em Desenvolvimento
 
 ---
 
 # Objetivo
 
-Este documento organiza todas as funcionalidades do Veltis AI Platform em Épicos, Funcionalidades e Sprints.
+Este documento organiza as funcionalidades do Veltis AI Platform em Épicos e Funcionalidades.
 
-O backlog será atualizado continuamente durante a evolução da plataforma.
+O Product Backlog representa todas as funcionalidades que agregam valor ao produto e será atualizado continuamente durante sua evolução.
 
 ---
 
 # ÉPICO 1 — Fundação da Plataforma
 
-## Sprint 0
+## Infraestrutura Inicial
 
-### Infraestrutura
+- [x] Estrutura da solução
+- [x] Arquitetura em camadas
+- [x] PostgreSQL
+- [x] Entity Framework Core
+- [x] ASP.NET Identity
+- [x] Dashboard inicial
+- [x] Área Administrativa
 
-* [x] Criar solução .NET 8
-* [x] Criar arquitetura em camadas
-* [x] Configurar GitHub
-* [x] Configurar PostgreSQL
-* [x] Configurar Entity Framework Core
-* [x] Criar AppDbContext
-* [x] Criar primeira Migration
+## Interface Administrativa
 
-### Segurança
-
-* [x] ASP.NET Identity
-* [x] Login
-* [x] Logout
-* [x] Seed do Administrador
-
-### Administração
-
-* [x] Dashboard inicial
-* [x] Área Administrativa
-* [ ] Layout Premium
-* [ ] Sidebar responsiva
-* [ ] Topbar
-* [ ] Tema Claro/Escuro
+- [ ] Layout Premium
+- [ ] Sidebar Responsiva
+- [ ] Topbar
+- [ ] Tema Claro / Escuro
+- [ ] Dashboard Executivo
+- [ ] Cards Estatísticos
+- [ ] Gráficos
 
 ---
 
-# ÉPICO 2 — Cadastros
+# ÉPICO 2 — Administração
 
 ## Empresas
 
-* [x] Cadastro
-* [x] Alteração
-* [x] Exclusão
-* [ ] Pesquisa avançada
-* [ ] Paginação
-* [ ] Auditoria
+- [x] Cadastro
+- [x] Alteração
+- [x] Exclusão
+- [ ] Pesquisa avançada
+- [ ] Paginação
+- [ ] Auditoria
 
 ## Clientes
 
-* [x] Estrutura
-* [ ] CRUD completo
-* [ ] Associação com empresa
-* [ ] Histórico
-* [ ] Status
+- [x] Estrutura inicial
+- [ ] CRUD completo
+- [ ] Associação com Empresa
+- [ ] Status
+- [ ] Histórico
 
 ## Usuários
 
-* [ ] Cadastro
-* [ ] Perfis
-* [ ] Permissões
-* [ ] Bloqueio
-* [ ] Alteração de senha
+- [ ] Cadastro
+- [ ] Perfis
+- [ ] Permissões
+- [ ] Bloqueio
+- [ ] Alteração de senha
 
 ---
 
-# ÉPICO 3 — Planos
+# ÉPICO 3 — Comercial
 
-* [x] Estrutura inicial
-* [ ] CRUD
-* [ ] Limite de usuários
-* [ ] Limite de tokens
-* [ ] Créditos mensais
-* [ ] Controle de ativação
+## Planos
+
+- [x] Estrutura inicial
+- [ ] CRUD completo
+- [ ] Créditos mensais
+- [ ] Limite de usuários
+- [ ] Limite mensal de tokens
+- [ ] Ativação
+- [ ] Desativação
+
+## Assinaturas
+
+- [ ] Criar assinatura
+- [ ] Renovação
+- [ ] Cancelamento
+- [ ] Suspensão
+- [ ] Histórico
+
+## Créditos
+
+- [ ] Compra de créditos
+- [ ] Consumo
+- [ ] Histórico
+- [ ] Ajustes manuais
+- [ ] Saldo
 
 ---
 
-# ÉPICO 4 — Assinaturas
-
-* [ ] Criar assinatura
-* [ ] Renovação
-* [ ] Cancelamento
-* [ ] Suspensão
-* [ ] Histórico
-
----
-
-# ÉPICO 5 — Créditos
-
-* [ ] Compra de créditos
-* [ ] Consumo
-* [ ] Histórico
-* [ ] Saldo
-* [ ] Ajustes manuais
-
----
-
-# ÉPICO 6 — Inteligência Artificial
+# ÉPICO 4 — Infraestrutura de IA
 
 ## Provedores
 
-* [ ] OpenAI
-* [ ] Anthropic
-* [ ] Google Gemini
-* [ ] Grok
-* [ ] DeepSeek
-* [ ] OpenRouter
-* [ ] Azure OpenAI
+- [ ] OpenAI
+- [ ] Anthropic
+- [ ] Google Gemini
+- [ ] Grok
+- [ ] DeepSeek
+- [ ] OpenRouter
+- [ ] Azure OpenAI
+
+## Configuração
+
+- [ ] API Keys
+- [ ] Endpoints
+- [ ] Timeout
+- [ ] Retry
+- [ ] Health Check
+- [ ] Ativação
+- [ ] Desativação
 
 ## Modelos
 
-* [ ] Cadastro
-* [ ] Configuração
-* [ ] Ativação
-* [ ] Custos por token
+- [ ] Cadastro
+- [ ] Configuração
+- [ ] Ativação
+- [ ] Custos
+- [ ] Tokens
+- [ ] Context Window
 
 ---
 
-# ÉPICO 7 — Chat
+# ÉPICO 5 — Consumo
 
-* [ ] Nova conversa
-* [ ] Histórico
-* [ ] Contexto
-* [ ] Prompts
-* [ ] Exportação
-* [ ] Exclusão
-
----
-
-# ÉPICO 8 — Consumo
-
-* [ ] Tokens enviados
-* [ ] Tokens recebidos
-* [ ] Custos
-* [ ] Histórico
-* [ ] Estatísticas
+- [ ] Tokens enviados
+- [ ] Tokens recebidos
+- [ ] Créditos consumidos
+- [ ] Histórico
+- [ ] Estatísticas
+- [ ] Rateio
+- [ ] Custo Real
+- [ ] Margem
+- [ ] Lucro
+- [ ] Consumo por Empresa
+- [ ] Consumo por Usuário
 
 ---
 
-# ÉPICO 9 — Financeiro
+# ÉPICO 6 — Chat
 
-* [ ] Planos
-* [ ] Assinaturas
-* [ ] Cobranças
-* [ ] PIX
-* [ ] Cartão
-* [ ] Faturas
-* [ ] Relatórios
+- [ ] Nova conversa
+- [ ] Histórico
+- [ ] Contexto
+- [ ] Exportação
+- [ ] Exclusão
 
 ---
 
-# ÉPICO 10 — API
+# ÉPICO 7 — Financeiro
 
-* [ ] Autenticação
-* [ ] Empresas
-* [ ] Clientes
-* [ ] Chats
-* [ ] Créditos
-* [ ] Consumo
-* [ ] Documentação Swagger
-
----
-
-# ÉPICO 11 — Aplicativo Flutter
-
-* [ ] Login
-* [ ] Dashboard
-* [ ] Chat
-* [ ] Histórico
-* [ ] Perfil
-* [ ] Notificações
+- [ ] PIX
+- [ ] Cartão
+- [ ] Gateway de Pagamento
+- [ ] Webhooks
+- [ ] Cobranças
+- [ ] Faturas
+- [ ] Renovação Automática
+- [ ] Relatórios
 
 ---
 
-# ÉPICO 12 — Infraestrutura
+# ÉPICO 8 — API Pública
 
-* [ ] Docker
-* [ ] CI/CD
-* [ ] Logs
-* [ ] Backup
-* [ ] Monitoramento
-* [ ] Hospedagem
+- [ ] Autenticação
+- [ ] Empresas
+- [ ] Clientes
+- [ ] Usuários
+- [ ] Créditos
+- [ ] Consumo
+- [ ] API Keys
+- [ ] Documentação Swagger
+
+---
+
+# ÉPICO 9 — Aplicativo Flutter
+
+- [ ] Login
+- [ ] Dashboard
+- [ ] Consumo
+- [ ] Histórico
+- [ ] Perfil
+- [ ] Notificações
+
+---
+
+# ÉPICO 10 — Observabilidade
+
+- [ ] Auditoria
+- [ ] Logs
+- [ ] Monitoramento
+- [ ] Alertas
+- [ ] Dashboard Operacional
 
 ---
 
 # Status Geral
 
-| Épico          | Progresso |
-| -------------- | --------- |
-| Fundação       | 80%       |
-| Cadastros      | 30%       |
-| Planos         | 20%       |
-| Assinaturas    | 0%        |
-| Créditos       | 0%        |
-| IA             | 0%        |
-| Chat           | 0%        |
-| Financeiro     | 0%        |
-| API            | 0%        |
-| Flutter        | 0%        |
-| Infraestrutura | 0%        |
+| Épico | Progresso |
+|--------|-----------|
+| Fundação da Plataforma | 85% |
+| Administração | 35% |
+| Comercial | 25% |
+| Infraestrutura de IA | 0% |
+| Consumo | 0% |
+| Chat | 0% |
+| Financeiro | 0% |
+| API Pública | 0% |
+| Flutter | 0% |
+| Observabilidade | 0% |
+
+---
+
+# Observações
+
+Este documento contempla exclusivamente funcionalidades do produto.
+
+Atividades técnicas como Docker, CI/CD, GitHub Actions, Refatorações, Scripts de Banco de Dados e demais tarefas de infraestrutura serão mantidas em um documento específico de **Development Backlog**.
 
 ---
 
 # Controle de Revisões
 
-| Versão | Data       | Descrição                          |
-| ------ | ---------- | ---------------------------------- |
-| 1.0    | Junho/2026 | Criação inicial do Product Backlog |
+| Versão | Data | Descrição |
+|---------|------|-----------|
+| 1.0 | Junho/2026 | Criação inicial do Product Backlog |
+| 1.1 | Julho/2026 | Revisão completa alinhando o backlog ao posicionamento do Veltis AI Platform como infraestrutura para acesso e gerenciamento de Inteligência Artificial. |

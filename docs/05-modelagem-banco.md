@@ -1,389 +1,100 @@
 # Veltis AI Platform
 
-## Documento 05 – Modelagem do Banco de Dados
+## Documento 05 – Modelo de Domínio
 
-**Versão:** 1.0
-**Data:** Junho/2026
+**Versão:** 1.0  
+**Data:** Julho/2026  
 **Status:** Em Desenvolvimento
 
 ---
 
-# Objetivo
+# 1. Objetivo
 
-Este documento define a modelagem lógica inicial do banco de dados do Veltis AI Platform.
+Este documento define o modelo de domínio do Veltis AI Platform.
 
-A estrutura foi projetada para suportar uma plataforma SaaS Multi-Tenant, permitindo o gerenciamento de múltiplas empresas, usuários, assinaturas e integrações com diversos provedores de Inteligência Artificial.
+O objetivo é estabelecer os principais conceitos de negócio da plataforma antes da modelagem definitiva do banco de dados e da implementação das entidades no código.
+
+Este documento responde perguntas fundamentais como:
+
+- Quem contrata a plataforma?
+- Quem utiliza a plataforma?
+- Quem possui assinatura?
+- Quem possui créditos?
+- Quem consome Inteligência Artificial?
+- Como pessoas físicas e empresas serão representadas?
+- Como sistemas externos poderão consumir a plataforma?
 
 ---
 
-# Visão Geral
+# 2. Princípio Central
 
-O banco de dados será desenvolvido utilizando PostgreSQL.
+O Veltis AI Platform será centrado no conceito de **Account**.
 
-Toda a aplicação utilizará Entity Framework Core para acesso aos dados.
+A Account representa a conta contratante da plataforma.
 
-Cada empresa (Company) será um Tenant independente dentro da plataforma.
+Uma Account pode representar:
+
+- Uma pessoa física.
+- Uma empresa.
+- Um sistema ou aplicação externa.
+
+Todas as principais operações da plataforma estarão vinculadas a uma Account.
 
 ---
 
-# Modelo Conceitual
+# 3. Conceito de Account
+
+## Definição
+
+A **Account** representa a unidade principal de contratação, cobrança, consumo e isolamento lógico da plataforma.
+
+Ela é o centro do domínio do Veltis AI.
+
+## Responsabilidades
+
+Uma Account possui:
+
+- Usuários.
+- Assinaturas.
+- Créditos.
+- Histórico de consumo.
+- Conversas.
+- API Keys.
+- Faturas.
+- Configurações.
+
+## Tipos de Account
+
+Tipos iniciais:
+
+- Individual
+- Company
+- System
+
+## Exemplos
+
+### Conta Individual
+
+Um profissional autônomo contrata um plano para acessar diversos provedores de IA em uma única plataforma.
+
+### Conta Empresa
+
+Uma empresa contrata um plano para que vários usuários internos acessem e consumam IA.
+
+### Conta Sistema
+
+Um sistema externo, como ERP, CRM ou Veltis Workspace, consome a API do Veltis AI.
+
+---
+
+# 4. Account x Company
+
+A entidade **Company** não deve ser o centro da plataforma.
+
+Company representa dados empresariais vinculados a uma Account do tipo Company.
+
+Exemplo:
 
 ```text
-Company
-│
-├── Users
-├── Customers
-├── Plans
-├── Subscriptions
-├── Credits
-├── AI Providers
-├── AI Models
-├── Conversations
-├── Messages
-└── Usage
-```
-
----
-
-# Entidades Principais
-
-## Company
-
-Representa uma empresa cadastrada na plataforma.
-
-Campos:
-
-* Id
-* Name
-* Email
-* Phone
-* Document
-* Active
-* CreatedAt
-* UpdatedAt
-
-Relacionamentos:
-
-* 1:N Users
-* 1:N Customers
-* 1:N Plans
-* 1:N Subscriptions
-
----
-
-## ApplicationUser
-
-Usuário autenticado na plataforma.
-
-Campos:
-
-* Id
-* CompanyId
-* FullName
-* Email
-* PasswordHash
-* PhoneNumber
-* Active
-* LastLogin
-* CreatedAt
-
-Relacionamentos:
-
-* N:1 Company
-
----
-
-## Customer
-
-Representa o cliente final vinculado à empresa.
-
-Campos:
-
-* Id
-* CompanyId
-* Name
-* Email
-* Phone
-* Document
-* Credits
-* Active
-* CreatedAt
-
-Relacionamentos:
-
-* N:1 Company
-* 1:N Conversations
-* 1:N Usage
-
----
-
-## Plan
-
-Plano comercial disponível.
-
-Campos:
-
-* Id
-* Name
-* Description
-* MonthlyPrice
-* CreditsIncluded
-* MaxUsers
-* MaxTokensPerMonth
-* Active
-
-Relacionamentos:
-
-* 1:N Subscriptions
-
----
-
-## Subscription
-
-Assinatura contratada.
-
-Campos:
-
-* Id
-* CompanyId
-* PlanId
-* StartDate
-* EndDate
-* Status
-* AutoRenew
-* CreatedAt
-
-Relacionamentos:
-
-* N:1 Company
-* N:1 Plan
-
----
-
-## Credit
-
-Controle financeiro de créditos.
-
-Campos:
-
-* Id
-* CompanyId
-* CustomerId
-* Amount
-* Balance
-* Type
-* Description
-* CreatedAt
-
-Relacionamentos:
-
-* N:1 Company
-* N:1 Customer
-
----
-
-# Inteligência Artificial
-
-## AIProvider
-
-Representa um provedor de IA.
-
-Exemplos:
-
-* OpenAI
-* Anthropic
-* Google Gemini
-* Grok
-* DeepSeek
-* Azure OpenAI
-* OpenRouter
-
-Campos:
-
-* Id
-* Name
-* BaseUrl
-* ApiKey
-* Active
-
-Relacionamentos:
-
-* 1:N AIModels
-
----
-
-## AIModel
-
-Representa um modelo disponível.
-
-Campos:
-
-* Id
-* ProviderId
-* Name
-* ModelIdentifier
-* ContextLimit
-* InputTokenPrice
-* OutputTokenPrice
-* Active
-
-Relacionamentos:
-
-* N:1 AIProvider
-
----
-
-# Chat
-
-## Conversation
-
-Campos:
-
-* Id
-* CompanyId
-* CustomerId
-* Title
-* CreatedAt
-
-Relacionamentos:
-
-* N:1 Customer
-* 1:N Messages
-
----
-
-## Message
-
-Campos:
-
-* Id
-* ConversationId
-* Role
-* Content
-* PromptTokens
-* CompletionTokens
-* TotalTokens
-* Cost
-* CreatedAt
-
-Relacionamentos:
-
-* N:1 Conversation
-
----
-
-# Consumo
-
-## Usage
-
-Campos:
-
-* Id
-* CompanyId
-* CustomerId
-* ModelId
-* PromptTokens
-* CompletionTokens
-* TotalTokens
-* Cost
-* CreatedAt
-
-Relacionamentos:
-
-* N:1 Company
-* N:1 Customer
-* N:1 AIModel
-
----
-
-# Financeiro
-
-## Invoice
-
-Campos:
-
-* Id
-* CompanyId
-* SubscriptionId
-* Total
-* DueDate
-* PaidDate
-* Status
-
----
-
-## Payment
-
-Campos:
-
-* Id
-* InvoiceId
-* Method
-* TransactionId
-* Amount
-* CreatedAt
-
----
-
-# Auditoria
-
-## AuditLog
-
-Campos:
-
-* Id
-* UserId
-* Action
-* Entity
-* EntityId
-* OldValues
-* NewValues
-* IpAddress
-* CreatedAt
-
----
-
-# Relacionamentos Gerais
-
-```text
-Company
- ├── Users
- ├── Customers
- ├── Subscriptions
- ├── Credits
- ├── Conversations
- ├── Usage
- ├── Invoices
- └── AuditLogs
-
-Plan
- └── Subscriptions
-
-AIProvider
- └── AIModels
-
-Conversation
- └── Messages
-
-Invoice
- └── Payments
-```
-
----
-
-# Convenções
-
-* Chaves primárias do tipo Guid.
-* Datas armazenadas em UTC.
-* Exclusão lógica para entidades de negócio.
-* Controle de auditoria em operações críticas.
-* Índices para campos de pesquisa e relacionamentos.
-* Suporte à expansão de novos módulos sem alterações estruturais significativas.
-
----
-
-# Controle de Revisões
-
-| Versão | Data       | Descrição                                      |
-| ------ | ---------- | ---------------------------------------------- |
-| 1.0    | Junho/2026 | Criação inicial da modelagem do banco de dados |
+Account
+ └── CompanyProfile

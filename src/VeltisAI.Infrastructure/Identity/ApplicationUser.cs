@@ -1,9 +1,14 @@
 using Microsoft.AspNetCore.Identity;
+using VeltisAI.Domain.Entities;
 
 namespace VeltisAI.Infrastructure.Identity;
 
 public class ApplicationUser : IdentityUser
 {
+    public Guid? AccountId { get; set; }
+
+    public Account? Account { get; set; }
+
     public string FullName { get; set; } = string.Empty;
 
     public bool Active { get; set; } = true;

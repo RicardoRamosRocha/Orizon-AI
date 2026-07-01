@@ -2,15 +2,15 @@
 
 ## Documento 02 – Requisitos do Sistema
 
-**Versão:** 1.0
-**Data:** Junho/2026
+**Versão:** 1.1  
+**Data:** Julho/2026  
 **Status:** Em Desenvolvimento
 
 ---
 
 # 1. Objetivo
 
-Este documento define os requisitos funcionais e não funcionais do Veltis AI Platform, servindo como referência para o desenvolvimento, testes e evolução da plataforma.
+Este documento define os requisitos funcionais e não funcionais do Veltis AI Platform, servindo como referência para o desenvolvimento, testes, implantação e evolução da plataforma.
 
 ---
 
@@ -20,12 +20,13 @@ Este documento define os requisitos funcionais e não funcionais do Veltis AI Pl
 
 O sistema deve permitir:
 
-* Login por e-mail e senha.
-* Logout.
-* Recuperação de senha.
-* Alteração de senha.
-* Confirmação de e-mail.
-* Controle de sessão.
+- Login por e-mail e senha.
+- Logout.
+- Recuperação de senha.
+- Alteração de senha.
+- Confirmação de e-mail.
+- Controle de sessão.
+- Autenticação para contas individuais e empresariais.
 
 ---
 
@@ -33,14 +34,14 @@ O sistema deve permitir:
 
 O sistema deve permitir:
 
-* Cadastrar empresas.
-* Editar empresas.
-* Excluir empresas (quando permitido).
-* Ativar/Inativar empresas.
-* Pesquisar empresas.
-* Visualizar detalhes da empresa.
+- Cadastrar empresas.
+- Editar empresas.
+- Ativar/Inativar empresas.
+- Pesquisar empresas.
+- Visualizar detalhes.
+- Controlar assinatura da empresa.
 
-Cada empresa será um tenant da plataforma.
+Cada empresa representa um tenant da plataforma.
 
 ---
 
@@ -48,12 +49,12 @@ Cada empresa será um tenant da plataforma.
 
 O sistema deve permitir:
 
-* Cadastro de usuários.
-* Associação à empresa.
-* Associação a perfis de acesso.
-* Bloqueio e desbloqueio.
-* Alteração de senha.
-* Controle de permissões.
+- Cadastro de usuários.
+- Associação a uma conta individual ou empresa.
+- Associação a perfis de acesso.
+- Bloqueio e desbloqueio.
+- Alteração de senha.
+- Controle de permissões.
 
 ---
 
@@ -61,10 +62,10 @@ O sistema deve permitir:
 
 Perfis iniciais:
 
-* Administrador
-* Gestor
-* Operador
-* Cliente
+- Administrador
+- Gestor
+- Operador
+- Cliente
 
 Cada perfil possuirá permissões específicas.
 
@@ -74,12 +75,12 @@ Cada perfil possuirá permissões específicas.
 
 O sistema deve permitir:
 
-* Cadastro.
-* Alteração.
-* Exclusão lógica.
-* Consulta.
-* Pesquisa.
-* Associação à empresa.
+- Cadastro.
+- Alteração.
+- Exclusão lógica.
+- Consulta.
+- Pesquisa.
+- Associação à empresa quando aplicável.
 
 ---
 
@@ -87,12 +88,12 @@ O sistema deve permitir:
 
 O sistema deve permitir:
 
-* Cadastro de planos.
-* Definição do valor mensal.
-* Definição de créditos.
-* Limite de usuários.
-* Limite mensal de tokens.
-* Ativação e desativação.
+- Cadastro de planos.
+- Valor mensal.
+- Créditos inclusos.
+- Limite de usuários.
+- Limite mensal de tokens.
+- Ativação e desativação.
 
 ---
 
@@ -100,11 +101,11 @@ O sistema deve permitir:
 
 O sistema deve permitir:
 
-* Criar assinatura.
-* Renovar assinatura.
-* Cancelar assinatura.
-* Suspender assinatura.
-* Histórico de alterações.
+- Criar assinatura.
+- Renovar assinatura.
+- Cancelar assinatura.
+- Suspender assinatura.
+- Histórico de alterações.
 
 ---
 
@@ -112,38 +113,47 @@ O sistema deve permitir:
 
 O sistema deve permitir:
 
-* Adicionar créditos.
-* Debitar créditos.
-* Histórico de movimentações.
-* Saldo disponível.
+- Adicionar créditos.
+- Debitar créditos.
+- Consultar saldo.
+- Histórico completo das movimentações.
 
 ---
 
 ## RF009 – Provedores de IA
 
-O sistema deverá permitir cadastrar múltiplos provedores, como:
+O sistema deverá permitir:
 
-* OpenAI
-* Anthropic
-* Google Gemini
-* Grok
-* DeepSeek
-* Outros provedores compatíveis
+- Cadastro de provedores.
+- API Key.
+- Endpoint.
+- Status.
+- Configurações.
+- Ativação e desativação.
 
-Cada provedor poderá possuir diferentes modelos e configurações.
+Exemplos:
+
+- OpenAI
+- Anthropic
+- Google Gemini
+- Grok
+- DeepSeek
+- Outros provedores compatíveis.
 
 ---
 
 ## RF010 – Modelos de IA
 
-Cada provedor poderá possuir:
+Cada modelo deverá possuir:
 
-* Nome do modelo.
-* Identificador.
-* Limite de contexto.
-* Valor por token.
-* Status.
-* Configurações específicas.
+- Nome.
+- Identificador.
+- Provedor.
+- Janela de contexto.
+- Valor por token de entrada.
+- Valor por token de saída.
+- Status.
+- Configurações específicas.
 
 ---
 
@@ -151,25 +161,27 @@ Cada provedor poderá possuir:
 
 O sistema deverá permitir:
 
-* Criar conversas.
-* Histórico.
-* Contexto.
-* Mensagens.
-* Exclusão.
-* Exportação.
+- Criar conversas.
+- Histórico.
+- Mensagens.
+- Exclusão.
+- Exportação.
 
 ---
 
 ## RF012 – Controle de Consumo
 
-O sistema deverá controlar:
+O sistema deverá registrar:
 
-* Tokens enviados.
-* Tokens recebidos.
-* Valor consumido.
-* Créditos utilizados.
-* Histórico por usuário.
-* Histórico por empresa.
+- Tokens enviados.
+- Tokens recebidos.
+- Modelo utilizado.
+- Provedor utilizado.
+- Valor consumido.
+- Créditos utilizados.
+- Usuário responsável.
+- Empresa responsável quando aplicável.
+- Data e horário.
 
 ---
 
@@ -177,11 +189,11 @@ O sistema deverá controlar:
 
 O sistema deverá permitir:
 
-* Emissão de faturas.
-* Controle de pagamentos.
-* Histórico financeiro.
-* Assinaturas.
-* Créditos.
+- Emissão de faturas.
+- Controle de pagamentos.
+- Histórico financeiro.
+- Assinaturas.
+- Créditos.
 
 ---
 
@@ -189,13 +201,13 @@ O sistema deverá permitir:
 
 O painel administrativo deverá apresentar indicadores como:
 
-* Empresas cadastradas.
-* Clientes ativos.
-* Assinaturas.
-* Consumo de IA.
-* Créditos disponíveis.
-* Receita mensal.
-* Alertas operacionais.
+- Empresas cadastradas.
+- Clientes ativos.
+- Assinaturas.
+- Consumo de IA.
+- Créditos disponíveis.
+- Receita mensal.
+- Alertas operacionais.
 
 ---
 
@@ -203,13 +215,15 @@ O painel administrativo deverá apresentar indicadores como:
 
 O sistema disponibilizará API REST para:
 
-* Autenticação.
-* Empresas.
-* Clientes.
-* Chats.
-* Créditos.
-* Consumo.
-* Integrações externas.
+- Autenticação.
+- Empresas.
+- Clientes.
+- Usuários.
+- Chats.
+- Créditos.
+- Consumo.
+- API Keys.
+- Integrações externas.
 
 ---
 
@@ -217,36 +231,36 @@ O sistema disponibilizará API REST para:
 
 ## RNF001 – Plataforma
 
-* ASP.NET Core 8
-* Entity Framework Core
-* PostgreSQL
+- ASP.NET Core 8.
+- Entity Framework Core.
+- PostgreSQL.
 
 ---
 
 ## RNF002 – Interface
 
-* Responsiva.
-* Compatível com desktop, tablet e smartphone.
-* Bootstrap 5.
+- Responsiva.
+- Compatível com desktop, tablet e smartphone.
+- Bootstrap 5.
 
 ---
 
 ## RNF003 – Segurança
 
-* ASP.NET Identity.
-* Hash de senhas.
-* Autorização baseada em papéis.
-* HTTPS.
-* Proteção contra CSRF.
+- ASP.NET Identity.
+- Hash de senhas.
+- Autorização baseada em papéis.
+- HTTPS.
+- Proteção contra CSRF.
 
 ---
 
 ## RNF004 – Performance
 
-* Paginação.
-* Consultas otimizadas.
-* Cache onde necessário.
-* Índices no banco de dados.
+- Paginação.
+- Consultas otimizadas.
+- Cache onde necessário.
+- Índices no banco de dados.
 
 ---
 
@@ -254,10 +268,11 @@ O sistema disponibilizará API REST para:
 
 Arquitetura preparada para:
 
-* Novos módulos.
-* Novos provedores de IA.
-* Aplicativo Flutter.
-* API pública.
+- Novos módulos.
+- Novos provedores de IA.
+- Aplicativo Flutter.
+- API pública.
+- Integração com outras plataformas.
 
 ---
 
@@ -265,24 +280,25 @@ Arquitetura preparada para:
 
 Registrar:
 
-* Login.
-* Logout.
-* Alterações de cadastro.
-* Exclusões.
-* Consumo de IA.
-* Alterações financeiras.
+- Login.
+- Logout.
+- Alterações cadastrais.
+- Exclusões.
+- Consumo de IA.
+- Alterações financeiras.
+- Alterações administrativas.
 
 ---
 
 # 4. Regras de Negócio
 
-* Cada usuário pertence a apenas uma empresa.
-* Cada empresa pode possuir vários usuários.
-* Cada assinatura está vinculada a um plano.
-* Créditos não podem ficar negativos.
-* Todo consumo de IA gera registro de utilização.
-* Somente administradores podem alterar configurações globais.
-* Toda alteração crítica deverá gerar registro de auditoria.
+- Cada usuário pertence a uma única conta (individual ou empresa).
+- Cada empresa pode possuir vários usuários.
+- Cada assinatura está vinculada a um plano.
+- Créditos não podem ficar negativos.
+- Todo consumo de IA gera registro de utilização.
+- Somente administradores podem alterar configurações globais.
+- Toda alteração crítica deverá gerar registro de auditoria.
 
 ---
 
@@ -290,18 +306,19 @@ Registrar:
 
 O sistema deverá ser:
 
-* Seguro.
-* Escalável.
-* Modular.
-* Responsivo.
-* Testável.
-* Documentado.
-* Versionado no GitHub.
+- Seguro.
+- Escalável.
+- Modular.
+- Responsivo.
+- Testável.
+- Documentado.
+- Versionado no GitHub.
 
 ---
 
 # Controle de Revisões
 
-| Versão | Data       | Descrição                                 |
-| ------ | ---------- | ----------------------------------------- |
-| 1.0    | Junho/2026 | Criação inicial dos requisitos do sistema |
+| Versão | Data | Descrição |
+|---------|------|-----------|
+| 1.0 | Junho/2026 | Criação inicial dos requisitos do sistema |
+| 1.1 | Julho/2026 | Revisão dos requisitos alinhando o produto ao conceito de plataforma de infraestrutura para Inteligência Artificial, contemplando pessoas, empresas e integrações via API. |
