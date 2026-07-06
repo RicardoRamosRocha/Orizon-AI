@@ -1,0 +1,78 @@
+@model VeltisAI.Domain.Entities.AIModel
+
+@{
+    ViewData["Title"] = "Novo Modelo de IA";
+}
+
+<h2>Novo Modelo de IA</h2>
+
+<form asp-area="Admin" asp-controller="AIModels" asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="AIProviderId" class="form-label">Provedor</label>
+        <select asp-for="AIProviderId" asp-items="ViewBag.AIProviderId" class="form-select">
+            <option value="">Selecione um provedor</option>
+        </select>
+        <span asp-validation-for="AIProviderId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Nome</label>
+        <input asp-for="Name" class="form-control" placeholder="Ex: GPT-4o Mini" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Identifier" class="form-label">Identificador</label>
+        <input asp-for="Identifier" class="form-control" placeholder="Ex: gpt-4o-mini" />
+        <span asp-validation-for="Identifier" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Modalities" class="form-label">Modalidade</label>
+        <select asp-for="Modalities" class="form-select">
+            <option value="Text">Texto</option>
+            <option value="Image">Imagem</option>
+            <option value="Audio">Áudio</option>
+            <option value="Video">Vídeo</option>
+            <option value="Multimodal">Multimodal</option>
+        </select>
+        <span asp-validation-for="Modalities" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ContextWindow" class="form-label">Janela de Contexto</label>
+        <input asp-for="ContextWindow" class="form-control" type="number" />
+        <span asp-validation-for="ContextWindow" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MaxOutputTokens" class="form-label">Máximo de Tokens de Saída</label>
+        <input asp-for="MaxOutputTokens" class="form-control" type="number" />
+        <span asp-validation-for="MaxOutputTokens" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="InputTokenPricePerMillion" class="form-label">Preço Input / 1M Tokens</label>
+        <input asp-for="InputTokenPricePerMillion" class="form-control" type="number" step="0.000001" />
+        <span asp-validation-for="InputTokenPricePerMillion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="OutputTokenPricePerMillion" class="form-label">Preço Output / 1M Tokens</label>
+        <input asp-for="OutputTokenPricePerMillion" class="form-control" type="number" step="0.000001" />
+        <span asp-validation-for="OutputTokenPricePerMillion" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="Active" class="form-check-input" />
+        <label asp-for="Active" class="form-check-label">Ativo</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+
+    <a asp-area="Admin" asp-controller="AIModels" asp-action="Index" class="btn btn-secondary">
+        Voltar
+    </a>
+</form>

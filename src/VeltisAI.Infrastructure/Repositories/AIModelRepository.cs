@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VeltisAI.Application.Interfaces.Repositories;
 using VeltisAI.Domain.Entities;
-using VeltisAI.Domain.Interfaces.Repositories;
 using VeltisAI.Infrastructure.Data;
 
 namespace VeltisAI.Infrastructure.Repositories;

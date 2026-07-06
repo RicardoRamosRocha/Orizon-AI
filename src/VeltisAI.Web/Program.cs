@@ -47,6 +47,8 @@ builder.Services.AddScoped<IPlanRepository, PlanRepository>();
 builder.Services.AddScoped<IPlanService, PlanService>();
 builder.Services.AddScoped<IAIProviderRepository, AIProviderRepository>();
 builder.Services.AddScoped<IAIProviderService, AIProviderService>();
+builder.Services.AddScoped<IAIModelRepository, AIModelRepository>();
+builder.Services.AddScoped<IAIModelService, AIModelService>();
 
 var app = builder.Build();
 
