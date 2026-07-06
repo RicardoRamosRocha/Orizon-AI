@@ -1,4 +1,5 @@
 using VeltisAI.Domain.Entities;
+using VeltisAI.Application.Interfaces.Repositories;
 
 namespace VeltisAI.Application.Interfaces.Services;
 

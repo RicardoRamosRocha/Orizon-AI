@@ -17,8 +17,7 @@ public class AIProviderRepository : IAIProviderRepository
     public async Task<List<AIProvider>> GetAllAsync()
     {
         return await _context.AIProviders
-            .OrderBy(x => x.Priority)
-            .ThenBy(x => x.DisplayName)
+            .OrderBy(x => x.DisplayName)
             .ToListAsync();
     }
 
@@ -41,16 +40,15 @@ public class AIProviderRepository : IAIProviderRepository
 
     public async Task DeleteAsync(Guid id)
     {
-        var entity = await GetByIdAsync(id);
+        var provider = await GetByIdAsync(id);
 
-        if (entity is not null)
-            _context.AIProviders.Remove(entity);
+        if (provider != null)
+            _context.AIProviders.Remove(provider);
     }
 
-    public async Task<bool> ExistsAsync(Guid id)
+    public Task<bool> ExistsAsync(Guid id)
     {
-        return await _context.AIProviders
-            .AnyAsync(x => x.Id == id);
+        return _context.AIProviders.AnyAsync(x => x.Id == id);
     }
 
     public async Task SaveChangesAsync()

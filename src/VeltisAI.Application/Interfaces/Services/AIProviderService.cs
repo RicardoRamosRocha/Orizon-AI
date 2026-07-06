@@ -2,6 +2,8 @@ using VeltisAI.Application.Interfaces.Repositories;
 using VeltisAI.Application.Interfaces.Services;
 using VeltisAI.Domain.Entities;
 
+
+
 namespace VeltisAI.Application.Services;
 
 public class AIProviderService : IAIProviderService

@@ -24,8 +24,17 @@ public class AIModelConfiguration : IEntityTypeConfiguration<AIModel>
         builder.Property(x => x.OutputTokenPricePerMillion)
             .HasPrecision(18, 6);
 
-        builder.HasIndex(x => x.AIProviderId);
-        builder.HasIndex(x => x.Identifier);
+        builder.HasOne(x => x.AIProvider)
+            .WithMany()
+            .HasForeignKey(x => x.AIProviderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasIndex(x => new
+        {
+            x.AIProviderId,
+            x.Identifier
+        }).IsUnique();
+
         builder.HasIndex(x => x.Active);
     }
 }
