@@ -1,73 +1,152 @@
-@model VeltisAI.Domain.Entities.AIModel
+@model VeltisAI.Web.Areas.Admin.ViewModels.AIModels.AIModelFormViewModel
+
 
 @{
-    ViewData["Title"] = "Editar Modelo de IA";
+    ViewData[ "Title"] = "Editar Modelo de IA";
 }
 
-<h2>Editar Modelo de IA</h2>
+<section class="crud-hero">
+    <div class="crud-eyebrow">
+        <i class="bi bi-pencil-square"></i>
+        Editar modelo
+    </div>
 
-<form asp-area="Admin" asp-controller="AIModels" asp-action="Edit" method="post">
+    <h1 class="crud-title">Atualizar modelo de IA</h1>
+
+    <p class="crud-subtitle">
+        Ajuste o provedor, identificador técnico, modalidade, limites operacionais,
+        precificação e status deste modelo de IA.
+    </p>
+</section>
+
+<form asp-area="Admin" asp-controller="AIModels" asp-action="Edit" method="post" class="premium-form-card">
     @Html.AntiForgeryToken()
-
     <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="CreatedAt" />
 
-    <div class="mb-3">
-        <label asp-for="AIProviderId" class="form-label">Provedor</label>
-        <select asp-for="AIProviderId" asp-items="ViewBag.AIProviderId" class="form-select">
-            <option value="">Selecione um provedor</option>
-        </select>
+    <div class="premium-form-header">
+        <h2>Informações do modelo</h2>
+        <p>Revise e atualize os dados principais do modelo.</p>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label">Nome</label>
-        <input asp-for="Name" class="form-control" />
+    <div class="premium-form-body">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="form-section-title">
+            <i class="bi bi-fingerprint"></i>
+            Identificação
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label asp-for="AIProviderId" class="form-label">Provedor</label>
+                <select asp-for="AIProviderId" asp-items="ViewBag.AIProviderId" class="form-select">
+                    <option value="">Selecione um provedor</option>
+                </select>
+                <span asp-validation-for="AIProviderId" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Modalities" class="form-label">Modalidade</label>
+                <select asp-for="Modalities" class="form-select">
+                    <option value="Text">Texto</option>
+                    <option value="Image">Imagem</option>
+                    <option value="Audio">Áudio</option>
+                    <option value="Video">Vídeo</option>
+                    <option value="Multimodal">Multimodal</option>
+                </select>
+                <span asp-validation-for="Modalities" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Name" class="form-label">Nome</label>
+                <input asp-for="Name" class="form-control" placeholder="Ex: GPT-4o Mini" />
+                <span asp-validation-for="Name" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Identifier" class="form-label">Identificador</label>
+                <input asp-for="Identifier" class="form-control" placeholder="Ex: gpt-4o-mini" />
+                <div class="form-hint">Identificador técnico utilizado nas chamadas para o provedor.</div>
+                <span asp-validation-for="Identifier" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-speedometer2"></i>
+            Limites operacionais
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label asp-for="ContextWindow" class="form-label">Janela de Contexto</label>
+                <input asp-for="ContextWindow" class="form-control" type="number" placeholder="Ex: 128000" />
+                <div class="form-hint">Quantidade máxima de tokens suportados no contexto.</div>
+                <span asp-validation-for="ContextWindow" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="MaxOutputTokens" class="form-label">Máximo de Tokens de Saída</label>
+                <input asp-for="MaxOutputTokens" class="form-control" type="number" placeholder="Ex: 4096" />
+                <div class="form-hint">Limite máximo de tokens gerados na resposta.</div>
+                <span asp-validation-for="MaxOutputTokens" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-cash-coin"></i>
+            Precificação
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label asp-for="InputTokenPricePerMillion" class="form-label">Preço Input / 1M Tokens</label>
+                <input asp-for="InputTokenPricePerMillion" class="form-control" type="number" step="0.000001" placeholder="Ex: 0.150000" />
+                <div class="form-hint">Custo por milhão de tokens de entrada.</div>
+                <span asp-validation-for="InputTokenPricePerMillion" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="OutputTokenPricePerMillion" class="form-label">Preço Output / 1M Tokens</label>
+                <input asp-for="OutputTokenPricePerMillion" class="form-control" type="number" step="0.000001" placeholder="Ex: 0.600000" />
+                <div class="form-hint">Custo por milhão de tokens de saída.</div>
+                <span asp-validation-for="OutputTokenPricePerMillion" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-toggle-on"></i>
+            Status
+        </div>
+
+        <div class="capability-grid">
+            <div class="capability-card">
+                <div class="form-check form-switch">
+                    <input asp-for="Active" class="form-check-input" />
+                    <label asp-for="Active" class="form-check-label">Ativo</label>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Identifier" class="form-label">Identificador</label>
-        <input asp-for="Identifier" class="form-control" />
+    <div class="premium-form-footer">
+        <a asp-area="Admin" asp-controller="AIModels" asp-action="Index" class="btn btn-outline-secondary premium-btn">
+            <i class="bi bi-arrow-left"></i>
+            Voltar
+        </a>
+
+        <button type="submit" class="premium-btn premium-btn-primary">
+            <i class="bi bi-check2-circle"></i>
+            Salvar Alterações
+        </button>
     </div>
-
-    <div class="mb-3">
-        <label asp-for="Modalities" class="form-label">Modalidade</label>
-        <select asp-for="Modalities" class="form-select">
-            <option value="Text">Texto</option>
-            <option value="Image">Imagem</option>
-            <option value="Audio">Áudio</option>
-            <option value="Video">Vídeo</option>
-            <option value="Multimodal">Multimodal</option>
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="ContextWindow" class="form-label">Janela de Contexto</label>
-        <input asp-for="ContextWindow" class="form-control" type="number" />
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="MaxOutputTokens" class="form-label">Máximo de Tokens de Saída</label>
-        <input asp-for="MaxOutputTokens" class="form-control" type="number" />
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="InputTokenPricePerMillion" class="form-label">Preço Input / 1M Tokens</label>
-        <input asp-for="InputTokenPricePerMillion" class="form-control" type="number" step="0.000001" />
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="OutputTokenPricePerMillion" class="form-label">Preço Output / 1M Tokens</label>
-        <input asp-for="OutputTokenPricePerMillion" class="form-control" type="number" step="0.000001" />
-    </div>
-
-    <div class="form-check mb-3">
-        <input asp-for="Active" class="form-check-input" />
-        <label asp-for="Active" class="form-check-label">Ativo</label>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-
-    <a asp-area="Admin" asp-controller="AIModels" asp-action="Index" class="btn btn-secondary">
-        Voltar
-    </a>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

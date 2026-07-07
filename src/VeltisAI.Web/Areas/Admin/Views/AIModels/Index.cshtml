@@ -4,66 +4,185 @@
     ViewData["Title"] = "Modelos de IA";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h2>Modelos de IA</h2>
-        <p class="text-muted">Gerencie os modelos disponíveis.</p>
+<section class="crud-hero">
+    <div class="crud-eyebrow">
+        <i class="bi bi-cpu-fill"></i>
+        Modelos de IA
     </div>
 
-    <a asp-area="Admin"
-       asp-controller="AIModels"
-       asp-action="Create"
-       class="btn btn-primary">
-        Novo Modelo
-    </a>
-</div>
+    <h1 class="crud-title">Gerenciar Modelos de IA</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Identifier</th>
-            <th>Provedor</th>
-            <th>Modalidade</th>
-            <th>Status</th>
-            <th width="180"></th>
-        </tr>
-    </thead>
+    <p class="crud-subtitle">
+        Gerencie todos os modelos disponíveis na plataforma, vinculando-os aos provedores de IA,
+        modalidades, limites operacionais e recursos suportados.
+    </p>
+</section>
 
-    <tbody>
-    @foreach (var item in Model)
+<section class="premium-table-card">
+
+    <div class="premium-table-header">
+        <div>
+            <h2>Modelos cadastrados</h2>
+            <p>
+                Todos os modelos configurados para utilização na infraestrutura da Veltis AI.
+            </p>
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="AIModels"
+           asp-action="Create"
+           class="premium-btn premium-btn-primary">
+            <i class="bi bi-plus-circle"></i>
+            Novo Modelo
+        </a>
+    </div>
+
+    @if (Model.Any())
     {
-        <tr>
-            <td>@item.Name</td>
-            <td>@item.Identifier</td>
-            <td>@item.AIProvider?.DisplayName</td>
-            <td>@item.Modalities</td>
+        <div class="table-responsive">
+            <table class="table premium-table">
 
-            <td>
-                @if (item.Active)
+                <thead>
+                    <tr>
+                        <th>Modelo</th>
+                        <th>Identifier</th>
+                        <th>Provedor</th>
+                        <th>Modalidade</th>
+                        <th>Status</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                @foreach (var item in Model)
                 {
-                    <span class="badge bg-success">Ativo</span>
-                }
-                else
-                {
-                    <span class="badge bg-danger">Inativo</span>
-                }
-            </td>
+                    <tr>
 
-            <td>
-                <a asp-action="Edit"
-                   asp-route-id="@item.Id"
-                   class="btn btn-sm btn-warning">
-                    Editar
-                </a>
+                        <td>
+                            <div class="entity-name">
+                                <div class="entity-icon">
+                                    <i class="bi bi-cpu-fill"></i>
+                                </div>
 
-                <a asp-action="Delete"
-                   asp-route-id="@item.Id"
-                   class="btn btn-sm btn-danger">
-                    Excluir
-                </a>
-            </td>
-        </tr>
+                                <div>
+                                    <div class="entity-title">
+                                        @item.Name
+                                    </div>
+
+                                    <div class="entity-subtitle">
+                                        Modelo de IA
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="identifier-pill">
+                                @item.Identifier
+                            </span>
+                        </td>
+
+                        <td>
+                            @(item.AIProvider?.DisplayName ?? "-")
+                        </td>
+
+                        <td>
+                            @item.Modalities
+                        </td>
+
+                        <td>
+
+                            @if (item.Active)
+                            {
+                                <span class="status-badge status-active">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    Ativo
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-inactive">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    Inativo
+                                </span>
+                            }
+
+                        </td>
+
+                        <td>
+
+                            <div class="action-buttons">
+
+                                <a asp-area="Admin"
+                                   asp-controller="AIModels"
+                                   asp-action="Details"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-secondary"
+                                   title="Detalhes">
+
+                                    <i class="bi bi-eye"></i>
+
+                                </a>
+
+                                <a asp-area="Admin"
+                                   asp-controller="AIModels"
+                                   asp-action="Edit"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-primary"
+                                   title="Editar">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </a>
+
+                                <a asp-area="Admin"
+                                   asp-controller="AIModels"
+                                   asp-action="Delete"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-danger"
+                                   title="Excluir">
+
+                                    <i class="bi bi-trash3"></i>
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+                </tbody>
+
+            </table>
+        </div>
     }
-    </tbody>
-</table>
+    else
+    {
+        <div class="empty-state">
+
+            <i class="bi bi-cpu"></i>
+
+            <h3>Nenhum modelo cadastrado</h3>
+
+            <p>
+                Cadastre seu primeiro modelo para disponibilizá-lo na plataforma.
+            </p>
+
+            <a asp-area="Admin"
+               asp-controller="AIModels"
+               asp-action="Create"
+               class="premium-btn premium-btn-primary">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Cadastrar Modelo
+
+            </a>
+
+        </div>
+    }
+
+</section>

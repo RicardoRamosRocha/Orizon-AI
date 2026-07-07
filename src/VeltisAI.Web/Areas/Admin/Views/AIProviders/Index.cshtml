@@ -2,433 +2,164 @@
 
 @{
     ViewData["Title"] = "Provedores de IA";
-
-    var totalProviders = Model?.Count() ?? 0;
-    var activeProviders = Model?.Count(x => x.Active) ?? 0;
-    var inactiveProviders = totalProviders - activeProviders;
 }
 
-<style>
-    .premium-page {
-        padding: 8px 0 32px;
+<section class="crud-hero">
+    <div class="crud-eyebrow">
+        <i class="bi bi-cloud-fill"></i>
+        Provedores de IA
+    </div>
+
+    <h1 class="crud-title">Gerenciar Provedores de IA</h1>
+
+    <p class="crud-subtitle">
+        Gerencie integrações com provedores de inteligência artificial, prioridade,
+        disponibilidade, recursos suportados e status operacional da plataforma.
+    </p>
+</section>
+
+<section class="premium-table-card">
+    <div class="premium-table-header">
+        <div>
+            <h2>Provedores cadastrados</h2>
+            <p>
+                Todos os provedores configurados para uso na infraestrutura da Veltis AI.
+            </p>
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="AIProviders"
+           asp-action="Create"
+           class="premium-btn premium-btn-primary">
+            <i class="bi bi-plus-circle"></i>
+            Novo Provedor
+        </a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table premium-table">
+                <thead>
+                    <tr>
+                        <th>Provedor</th>
+                        <th>Tipo</th>
+                        <th>Base URL</th>
+                        <th>Prioridade</th>
+                        <th>Status</th>
+                        <th class="text-end">Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="entity-name">
+                                <div class="entity-icon">
+                                    <i class="bi bi-cloud-fill"></i>
+                                </div>
+
+                                <div>
+                                    <div class="entity-title">
+                                        @item.DisplayName
+                                    </div>
+
+                                    <div class="entity-subtitle">
+                                        Provedor de IA
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="identifier-pill">
+                                @item.Type
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="identifier-pill">
+                                @item.BaseUrl
+                            </span>
+                        </td>
+
+                        <td>
+                            @item.Priority
+                        </td>
+
+                        <td>
+                            @if (item.Active)
+                            {
+                                <span class="status-badge status-active">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    Ativo
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-inactive">
+                                    <i class="bi bi-x-circle-fill"></i>
+                                    Inativo
+                                </span>
+                            }
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <a asp-area="Admin"
+                                   asp-controller="AIProviders"
+                                   asp-action="Details"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-secondary"
+                                   title="Detalhes">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+
+                                <a asp-area="Admin"
+                                   asp-controller="AIProviders"
+                                   asp-action="Edit"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-primary"
+                                   title="Editar">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+
+                                <a asp-area="Admin"
+                                   asp-controller="AIProviders"
+                                   asp-action="Delete"
+                                   asp-route-id="@item.Id"
+                                   class="btn btn-sm btn-outline-danger"
+                                   title="Excluir">
+                                    <i class="bi bi-trash3"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     }
+    else
+    {
+        <div class="empty-state">
+            <i class="bi bi-cloud-plus"></i>
 
-    .premium-hero {
-        position: relative;
-        overflow: hidden;
-        border-radius: 28px;
-        padding: 34px;
-        margin-bottom: 26px;
-        color: #fff;
-        background:
-            radial-gradient(circle at top right, rgba(99, 102, 241, .55), transparent 35%),
-            linear-gradient(135deg, #08111f 0%, #111827 45%, #020617 100%);
-        box-shadow: 0 24px 70px rgba(15, 23, 42, .24);
-    }
+            <h3>Nenhum provedor cadastrado</h3>
 
-    .premium-hero::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image:
-            linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-        background-size: 36px 36px;
-        opacity: .45;
-        pointer-events: none;
-    }
+            <p>
+                Cadastre seu primeiro provedor para começar a integrar modelos de IA.
+            </p>
 
-    .premium-hero-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .premium-eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 7px 12px;
-        border-radius: 999px;
-        background: rgba(255,255,255,.10);
-        border: 1px solid rgba(255,255,255,.16);
-        color: rgba(255,255,255,.82);
-        font-size: .78rem;
-        font-weight: 700;
-        letter-spacing: .08em;
-        text-transform: uppercase;
-        margin-bottom: 16px;
-    }
-
-    .premium-title {
-        font-size: clamp(2rem, 4vw, 3.2rem);
-        font-weight: 850;
-        letter-spacing: -.055em;
-        margin-bottom: 10px;
-    }
-
-    .premium-subtitle {
-        max-width: 680px;
-        color: rgba(255,255,255,.68);
-        font-size: 1.02rem;
-        margin-bottom: 0;
-    }
-
-    .premium-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        border: 0;
-        border-radius: 16px;
-        padding: 13px 18px;
-        font-weight: 800;
-        text-decoration: none;
-        transition: all .2s ease;
-        white-space: nowrap;
-    }
-
-    .premium-btn-primary {
-        color: #08111f;
-        background: linear-gradient(135deg, #ffffff, #dbeafe);
-        box-shadow: 0 18px 36px rgba(59, 130, 246, .22);
-    }
-
-    .premium-btn-primary:hover {
-        transform: translateY(-2px);
-        color: #020617;
-        box-shadow: 0 24px 48px rgba(59, 130, 246, .28);
-    }
-
-    .metric-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-        margin-bottom: 22px;
-    }
-
-    .metric-card {
-        border: 1px solid rgba(226, 232, 240, .9);
-        border-radius: 24px;
-        padding: 22px;
-        background: rgba(255,255,255,.86);
-        box-shadow: 0 18px 45px rgba(15, 23, 42, .07);
-        backdrop-filter: blur(18px);
-    }
-
-    .metric-label {
-        color: #64748b;
-        font-size: .82rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: .06em;
-        margin-bottom: 8px;
-    }
-
-    .metric-value {
-        color: #0f172a;
-        font-size: 2rem;
-        font-weight: 900;
-        letter-spacing: -.04em;
-        line-height: 1;
-    }
-
-    .premium-panel {
-        border: 1px solid rgba(226, 232, 240, .95);
-        border-radius: 28px;
-        overflow: hidden;
-        background: #fff;
-        box-shadow: 0 24px 70px rgba(15, 23, 42, .08);
-    }
-
-    .premium-panel-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 22px 24px;
-        border-bottom: 1px solid #eef2f7;
-        background: linear-gradient(180deg, #ffffff, #f8fafc);
-    }
-
-    .premium-panel-title {
-        margin: 0;
-        color: #0f172a;
-        font-weight: 900;
-        letter-spacing: -.025em;
-    }
-
-    .premium-panel-description {
-        margin: 4px 0 0;
-        color: #64748b;
-        font-size: .92rem;
-    }
-
-    .premium-table {
-        margin: 0;
-    }
-
-    .premium-table thead th {
-        padding: 16px 24px;
-        background: #f8fafc;
-        color: #64748b;
-        border-bottom: 1px solid #e2e8f0;
-        font-size: .76rem;
-        text-transform: uppercase;
-        letter-spacing: .07em;
-        font-weight: 900;
-    }
-
-    .premium-table tbody td {
-        padding: 18px 24px;
-        vertical-align: middle;
-        border-bottom: 1px solid #f1f5f9;
-        color: #334155;
-    }
-
-    .premium-table tbody tr {
-        transition: all .18s ease;
-    }
-
-    .premium-table tbody tr:hover {
-        background: #f8fafc;
-    }
-
-    .provider-name {
-        color: #0f172a;
-        font-weight: 850;
-        letter-spacing: -.02em;
-    }
-
-    .provider-url {
-        max-width: 340px;
-        color: #64748b;
-        font-size: .88rem;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-    .premium-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        border-radius: 999px;
-        padding: 7px 11px;
-        font-size: .78rem;
-        font-weight: 800;
-    }
-
-    .premium-badge-success {
-        color: #047857;
-        background: #ecfdf5;
-        border: 1px solid #a7f3d0;
-    }
-
-    .premium-badge-muted {
-        color: #475569;
-        background: #f1f5f9;
-        border: 1px solid #e2e8f0;
-    }
-
-    .action-group {
-        display: inline-flex;
-        gap: 8px;
-    }
-
-    .action-btn {
-        border-radius: 12px;
-        padding: 8px 11px;
-        font-size: .82rem;
-        font-weight: 800;
-    }
-
-    .empty-state {
-        padding: 52px 24px;
-        text-align: center;
-    }
-
-    .empty-icon {
-        width: 68px;
-        height: 68px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 22px;
-        margin-bottom: 18px;
-        color: #2563eb;
-        background: #eff6ff;
-        font-size: 1.8rem;
-    }
-
-    @@media (max-width: 900px) {
-        .metric-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .premium-hero {
-            padding: 26px;
-        }
-
-        .premium-panel-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .action-group {
-            flex-wrap: wrap;
-            justify-content: flex-end;
-        }
-    }
-</style>
-
-<div class="premium-page">
-
-    <section class="premium-hero">
-        <div class="premium-hero-content d-flex justify-content-between align-items-start gap-4 flex-wrap">
-            <div>
-                <div class="premium-eyebrow">
-                    <i class="bi bi-stars"></i>
-                    Veltis AI Platform
-                </div>
-
-                <h1 class="premium-title">Provedores de IA</h1>
-
-                <p class="premium-subtitle">
-                    Gerencie integrações com provedores de inteligência artificial, priorização,
-                    disponibilidade e status operacional da plataforma.
-                </p>
-            </div>
-
-            <a asp-area="Admin" asp-controller="AIProviders" asp-action="Create" class="premium-btn premium-btn-primary">
+            <a asp-area="Admin"
+               asp-controller="AIProviders"
+               asp-action="Create"
+               class="premium-btn premium-btn-primary">
                 <i class="bi bi-plus-circle"></i>
-                Novo Provedor
+                Cadastrar Provedor
             </a>
         </div>
-    </section>
-
-    <section class="metric-grid">
-        <div class="metric-card">
-            <div class="metric-label">Total de Provedores</div>
-            <div class="metric-value">@totalProviders</div>
-        </div>
-
-        <div class="metric-card">
-            <div class="metric-label">Ativos</div>
-            <div class="metric-value">@activeProviders</div>
-        </div>
-
-        <div class="metric-card">
-            <div class="metric-label">Inativos</div>
-            <div class="metric-value">@inactiveProviders</div>
-        </div>
-    </section>
-
-    <section class="premium-panel">
-        <div class="premium-panel-header">
-            <div>
-                <h2 class="premium-panel-title">Catálogo de provedores</h2>
-                <p class="premium-panel-description">
-                    Lista dos provedores configurados para uso na infraestrutura Veltis AI.
-                </p>
-            </div>
-        </div>
-
-        @if (Model != null && Model.Any())
-        {
-            <div class="table-responsive">
-                <table class="table premium-table align-middle">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Tipo</th>
-                            <th>Base URL</th>
-                            <th>Prioridade</th>
-                            <th>Status</th>
-                            <th class="text-end">Ações</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    <div class="provider-name">@item.DisplayName</div>
-                                </td>
-
-                                <td>
-                                    <span class="premium-badge premium-badge-muted">
-                                        <i class="bi bi-cpu"></i>
-                                        @item.Type
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <div class="provider-url" title="@item.BaseUrl">
-                                        @item.BaseUrl
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <strong>@item.Priority</strong>
-                                </td>
-
-                                <td>
-                                    @if (item.Active)
-                                    {
-                                        <span class="premium-badge premium-badge-success">
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            Ativo
-                                        </span>
-                                    }
-                                    else
-                                    {
-                                        <span class="premium-badge premium-badge-muted">
-                                            <i class="bi bi-pause-circle"></i>
-                                            Inativo
-                                        </span>
-                                    }
-                                </td>
-
-                                <td class="text-end">
-                                    <div class="action-group">
-                                        <a asp-area="Admin" asp-controller="AIProviders" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary action-btn">
-                                            Detalhes
-                                        </a>
-
-                                        <a asp-area="Admin" asp-controller="AIProviders" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary action-btn">
-                                            Editar
-                                        </a>
-
-                                        <a asp-area="Admin" asp-controller="AIProviders" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger action-btn">
-                                            Excluir
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
-        else
-        {
-            <div class="empty-state">
-                <div class="empty-icon">
-                    <i class="bi bi-cloud-plus"></i>
-                </div>
-
-                <h3>Nenhum provedor cadastrado</h3>
-
-                <p class="text-muted">
-                    Comece adicionando o primeiro provedor de inteligência artificial da plataforma.
-                </p>
-
-                <a asp-area="Admin" asp-controller="AIProviders" asp-action="Create" class="premium-btn premium-btn-primary mt-2">
-                    <i class="bi bi-plus-circle"></i>
-                    Cadastrar primeiro provedor
-                </a>
-            </div>
-        }
-    </section>
-</div>
+    }
+</section>

@@ -5,88 +5,331 @@
     ViewData["Title"] = "Editar Provedor";
 }
 
-<h1>Editar Provedor de IA</h1>
+<section class="crud-hero">
+    <div class="crud-eyebrow">
+        <i class="bi bi-pencil-square"></i>
+        Editar provedor
+    </div>
 
-<form asp-action="Edit" method="post" class="card shadow-sm mt-4">
+    <h1 class="crud-title">Atualizar Provedor de IA</h1>
+
+    <p class="crud-subtitle">
+        Atualize os dados de identificação, conexão, credenciais,
+        configurações operacionais e capacidades deste provedor.
+    </p>
+</section>
+
+<form asp-area="Admin"
+      asp-controller="AIProviders"
+      asp-action="Edit"
+      method="post"
+      class="premium-form-card">
+
+    @Html.AntiForgeryToken()
+
     <input type="hidden" asp-for="Id" />
-    <div class="card-body">
-        <div class="row g-3">
-            <div class="col-md-6">
-                <label asp-for="DisplayName" class="form-label">Nome de Exibição</label>
-                <input asp-for="DisplayName" class="form-control" />
-            </div>
 
-            <div class="col-md-6">
-                <label asp-for="Name" class="form-label">Nome Interno</label>
-                <input asp-for="Name" class="form-control" />
-            </div>
+    <div class="premium-form-header">
+        <h2>Informações do provedor</h2>
+        <p>
+            Revise e atualize os dados principais utilizados pela plataforma.
+        </p>
+    </div>
 
-            <div class="col-md-6">
-                <label asp-for="Type" class="form-label">Tipo</label>
-                <select asp-for="Type" class="form-select" asp-items="Html.GetEnumSelectList<AIProviderType>()"></select>
-            </div>
+    <div class="premium-form-body">
 
-            <div class="col-md-6">
-                <label asp-for="BaseUrl" class="form-label">Base URL</label>
-                <input asp-for="BaseUrl" class="form-control" />
-            </div>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
-            <div class="col-md-6">
-                <label asp-for="ApiKey" class="form-label">API Key</label>
-                <input asp-for="ApiKey" class="form-control" type="password" />
-            </div>
-
-            <div class="col-md-3">
-                <label asp-for="Priority" class="form-label">Prioridade</label>
-                <input asp-for="Priority" class="form-control" />
-            </div>
-
-            <div class="col-md-3">
-                <label asp-for="TimeoutSeconds" class="form-label">Timeout</label>
-                <input asp-for="TimeoutSeconds" class="form-control" />
-            </div>
-
-            <div class="col-md-4">
-                <label asp-for="RetryCount" class="form-label">Tentativas</label>
-                <input asp-for="RetryCount" class="form-control" />
-            </div>
-
-            <div class="col-md-4">
-                <label asp-for="OrganizationId" class="form-label">Organization ID</label>
-                <input asp-for="OrganizationId" class="form-control" />
-            </div>
-
-            <div class="col-md-4">
-                <label asp-for="ApiVersion" class="form-label">Versão da API</label>
-                <input asp-for="ApiVersion" class="form-control" />
-            </div>
-
-            <div class="col-12 d-flex gap-4 mt-3">
-                <div class="form-check">
-                    <input asp-for="SupportsStreaming" class="form-check-input" />
-                    <label asp-for="SupportsStreaming" class="form-check-label">Streaming</label>
-                </div>
-
-                <div class="form-check">
-                    <input asp-for="SupportsVision" class="form-check-input" />
-                    <label asp-for="SupportsVision" class="form-check-label">Visão</label>
-                </div>
-
-                <div class="form-check">
-                    <input asp-for="SupportsAudio" class="form-check-input" />
-                    <label asp-for="SupportsAudio" class="form-check-label">Áudio</label>
-                </div>
-
-                <div class="form-check">
-                    <input asp-for="Active" class="form-check-input" />
-                    <label asp-for="Active" class="form-check-label">Ativo</label>
-                </div>
-            </div>
+        <div class="form-section-title">
+            <i class="bi bi-fingerprint"></i>
+            Identificação
         </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+                <label asp-for="DisplayName" class="form-label">
+                    Nome de Exibição
+                </label>
+
+                <input asp-for="DisplayName"
+                       class="form-control"
+                       placeholder="Ex: OpenAI" />
+
+                <span asp-validation-for="DisplayName"
+                      class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Name" class="form-label">
+                    Nome Interno
+                </label>
+
+                <input asp-for="Name"
+                       class="form-control"
+                       placeholder="Ex: openai" />
+
+                <span asp-validation-for="Name"
+                      class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Type" class="form-label">
+                    Tipo
+                </label>
+
+                <select asp-for="Type"
+                        asp-items="Html.GetEnumSelectList<AIProviderType>()"
+                        class="form-select">
+                </select>
+
+                <span asp-validation-for="Type"
+                      class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+
+                <label asp-for="BaseUrl"
+                       class="form-label">
+                    Base URL
+                </label>
+
+                <input asp-for="BaseUrl"
+                       class="form-control"
+                       placeholder="https://api.provedor.com" />
+
+                <div class="form-hint">
+                    URL utilizada nas chamadas da API.
+                </div>
+
+                <span asp-validation-for="BaseUrl"
+                      class="text-danger small"></span>
+
+            </div>
+
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-shield-lock"></i>
+            Segurança e Credenciais
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+
+                <label asp-for="ApiKey"
+                       class="form-label">
+                    API Key
+                </label>
+
+                <input asp-for="ApiKey"
+                       type="password"
+                       class="form-control"
+                       placeholder="Informe uma nova chave caso deseje alterar." />
+
+                <div class="form-hint">
+                    Caso não queira alterar a chave,
+                    mantenha o comportamento definido no controller.
+                </div>
+
+                <span asp-validation-for="ApiKey"
+                      class="text-danger small"></span>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <label asp-for="OrganizationId"
+                       class="form-label">
+                    Organization ID
+                </label>
+
+                <input asp-for="OrganizationId"
+                       class="form-control"
+                       placeholder="Opcional" />
+
+                <span asp-validation-for="OrganizationId"
+                      class="text-danger small"></span>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <label asp-for="ApiVersion"
+                       class="form-label">
+                    Versão da API
+                </label>
+
+                <input asp-for="ApiVersion"
+                       class="form-control"
+                       placeholder="Ex: v1" />
+
+                <span asp-validation-for="ApiVersion"
+                      class="text-danger small"></span>
+
+            </div>
+
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-sliders"></i>
+            Configuração Operacional
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <label asp-for="Priority"
+                       class="form-label">
+                    Prioridade
+                </label>
+
+                <input asp-for="Priority"
+                       class="form-control" />
+
+                <div class="form-hint">
+                    Quanto menor o número,
+                    maior a prioridade.
+                </div>
+
+                <span asp-validation-for="Priority"
+                      class="text-danger small"></span>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <label asp-for="TimeoutSeconds"
+                       class="form-label">
+                    Timeout
+                </label>
+
+                <input asp-for="TimeoutSeconds"
+                       class="form-control" />
+
+                <div class="form-hint">
+                    Tempo máximo da chamada.
+                </div>
+
+                <span asp-validation-for="TimeoutSeconds"
+                      class="text-danger small"></span>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <label asp-for="RetryCount"
+                       class="form-label">
+                    Tentativas
+                </label>
+
+                <input asp-for="RetryCount"
+                       class="form-control" />
+
+                <div class="form-hint">
+                    Quantidade de novas tentativas.
+                </div>
+
+                <span asp-validation-for="RetryCount"
+                      class="text-danger small"></span>
+
+            </div>
+
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-stars"></i>
+            Capacidades do Provedor
+        </div>
+
+        <div class="capability-grid">            <div class="capability-card">
+                <div class="form-check form-switch">
+                    <input asp-for="SupportsStreaming"
+                           class="form-check-input" />
+
+                    <label asp-for="SupportsStreaming"
+                           class="form-check-label">
+                        Streaming
+                    </label>
+                </div>
+            </div>
+
+            <div class="capability-card">
+                <div class="form-check form-switch">
+                    <input asp-for="SupportsVision"
+                           class="form-check-input" />
+
+                    <label asp-for="SupportsVision"
+                           class="form-check-label">
+                        Visão
+                    </label>
+                </div>
+            </div>
+
+            <div class="capability-card">
+                <div class="form-check form-switch">
+                    <input asp-for="SupportsAudio"
+                           class="form-check-input" />
+
+                    <label asp-for="SupportsAudio"
+                           class="form-check-label">
+                        Áudio
+                    </label>
+                </div>
+            </div>
+
+            <div class="capability-card">
+                <div class="form-check form-switch">
+                    <input asp-for="Active"
+                           class="form-check-input" />
+
+                    <label asp-for="Active"
+                           class="form-check-label">
+                        Ativo
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 
-    <div class="card-footer d-flex justify-content-between">
-        <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
-        <button type="submit" class="btn btn-primary">Salvar</button>
+    <div class="premium-form-footer">
+
+        <a asp-area="Admin"
+           asp-controller="AIProviders"
+           asp-action="Index"
+           class="btn btn-outline-secondary premium-btn">
+
+            <i class="bi bi-arrow-left"></i>
+            Voltar
+
+        </a>
+
+        <button type="submit"
+                class="premium-btn premium-btn-primary">
+
+            <i class="bi bi-check2-circle"></i>
+            Salvar Alterações
+
+        </button>
+
     </div>
+
 </form>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

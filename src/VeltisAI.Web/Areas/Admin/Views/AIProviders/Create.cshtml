@@ -5,78 +5,364 @@
     ViewData["Title"] = "Novo Provedor";
 }
 
-<h1>Novo Provedor de IA</h1>
+<style>
+    .crud-hero {
+        border-radius: 28px;
+        padding: 30px;
+        margin-bottom: 24px;
+        color: #fff;
+        background:
+            radial-gradient(circle at top right, rgba(37, 99, 235, .55), transparent 34%),
+            linear-gradient(135deg, #08111f, #111827 55%, #020617);
+        box-shadow: 0 24px 70px rgba(15, 23, 42, .22);
+    }
 
-<form asp-action="Create" method="post" class="card shadow-sm mt-4">
-    <div class="card-body">
-        <div class="row g-3">
+    .crud-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.10);
+        border: 1px solid rgba(255,255,255,.16);
+        color: rgba(255,255,255,.82);
+        font-size: .76rem;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+    }
+
+    .crud-title {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 900;
+        letter-spacing: -.055em;
+    }
+
+    .crud-subtitle {
+        margin: 10px 0 0;
+        max-width: 720px;
+        color: rgba(255,255,255,.66);
+    }
+
+    .premium-form-card {
+        border: 1px solid rgba(226, 232, 240, .95);
+        border-radius: 28px;
+        overflow: hidden;
+        background: rgba(255,255,255,.9);
+        box-shadow: 0 24px 70px rgba(15, 23, 42, .08);
+        backdrop-filter: blur(18px);
+    }
+
+    .premium-form-header {
+        padding: 24px 26px;
+        border-bottom: 1px solid #eef2f7;
+        background: linear-gradient(180deg, #fff, #f8fafc);
+    }
+
+    .premium-form-header h2 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 1.15rem;
+        font-weight: 900;
+        letter-spacing: -.03em;
+    }
+
+    .premium-form-header p {
+        margin: 6px 0 0;
+        color: #64748b;
+        font-size: .92rem;
+    }
+
+    .premium-form-body {
+        padding: 28px;
+    }
+
+    .form-section-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 4px 0 18px;
+        color: #0f172a;
+        font-weight: 900;
+        letter-spacing: -.025em;
+    }
+
+    .form-section-title i {
+        width: 34px;
+        height: 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: #2563eb;
+        background: #eff6ff;
+    }
+
+    .form-label {
+        color: #334155;
+        font-weight: 800;
+        font-size: .84rem;
+        margin-bottom: 8px;
+    }
+
+    .form-control,
+    .form-select {
+        min-height: 48px;
+        border-radius: 15px;
+        border: 1px solid #dbe3ef;
+        background-color: #fff;
+        font-weight: 600;
+        color: #0f172a;
+        box-shadow: none;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 .22rem rgba(37, 99, 235, .12);
+    }
+
+    .form-hint {
+        color: #64748b;
+        font-size: .78rem;
+        margin-top: 6px;
+    }
+
+    .capability-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .capability-card {
+        position: relative;
+        padding: 16px;
+        border-radius: 20px;
+        border: 1px solid #e2e8f0;
+        background: #fff;
+        transition: all .18s ease;
+    }
+
+    .capability-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 34px rgba(15, 23, 42, .08);
+    }
+
+    .capability-card .form-check-input {
+        width: 2.6em;
+        height: 1.35em;
+        margin-right: 10px;
+    }
+
+    .capability-card label {
+        font-weight: 850;
+        color: #0f172a;
+    }
+
+    .premium-form-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        padding: 22px 28px;
+        border-top: 1px solid #eef2f7;
+        background: #f8fafc;
+    }
+
+    .premium-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        min-height: 46px;
+        padding: 11px 18px;
+        border-radius: 15px;
+        font-weight: 900;
+        text-decoration: none;
+    }
+
+    .premium-btn-primary {
+        border: 0;
+        color: #fff;
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        box-shadow: 0 16px 36px rgba(37, 99, 235, .22);
+    }
+
+    .premium-btn-primary:hover {
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+    .divider-soft {
+        margin: 28px 0;
+        border-color: #eef2f7;
+        opacity: 1;
+    }
+
+    @@media (max-width: 992px) {
+        .capability-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @@media (max-width: 576px) {
+        .premium-form-footer {
+            flex-direction: column-reverse;
+            align-items: stretch;
+        }
+
+        .capability-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<section class="crud-hero">
+    <div class="crud-eyebrow">
+        <i class="bi bi-cloud-plus"></i>
+        Novo provedor
+    </div>
+
+    <h1 class="crud-title">Cadastrar provedor de IA</h1>
+
+    <p class="crud-subtitle">
+        Configure um novo provedor para integrar modelos, chaves de API,
+        prioridades e capacidades operacionais da plataforma Veltis AI.
+    </p>
+</section>
+
+<form asp-area="Admin" asp-controller="AIProviders" asp-action="Create" method="post" class="premium-form-card">
+    <div class="premium-form-header">
+        <h2>Informações do provedor</h2>
+        <p>Defina os dados principais de identificação e conexão.</p>
+    </div>
+
+    <div class="premium-form-body">
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="form-section-title">
+            <i class="bi bi-fingerprint"></i>
+            Identificação
+        </div>
+
+        <div class="row g-4">
             <div class="col-md-6">
                 <label asp-for="DisplayName" class="form-label">Nome de Exibição</label>
-                <input asp-for="DisplayName" class="form-control" />
+                <input asp-for="DisplayName" class="form-control" placeholder="Ex: OpenAI" />
+                <span asp-validation-for="DisplayName" class="text-danger small"></span>
             </div>
 
             <div class="col-md-6">
                 <label asp-for="Name" class="form-label">Nome Interno</label>
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Name" class="form-control" placeholder="Ex: openai" />
+                <span asp-validation-for="Name" class="text-danger small"></span>
             </div>
 
             <div class="col-md-6">
                 <label asp-for="Type" class="form-label">Tipo</label>
                 <select asp-for="Type" class="form-select" asp-items="Html.GetEnumSelectList<AIProviderType>()"></select>
+                <span asp-validation-for="Type" class="text-danger small"></span>
             </div>
 
             <div class="col-md-6">
                 <label asp-for="BaseUrl" class="form-label">Base URL</label>
-                <input asp-for="BaseUrl" class="form-control" />
+                <input asp-for="BaseUrl" class="form-control" placeholder="https://api.provedor.com" />
+                <div class="form-hint">URL base utilizada nas chamadas para o provedor.</div>
+                <span asp-validation-for="BaseUrl" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-shield-lock"></i>
+            Segurança e credenciais
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label asp-for="ApiKey" class="form-label">API Key</label>
+                <input asp-for="ApiKey" class="form-control" type="password" placeholder="Cole a chave de API" />
+                <div class="form-hint">A chave será utilizada para autenticação com o provedor.</div>
+                <span asp-validation-for="ApiKey" class="text-danger small"></span>
             </div>
 
             <div class="col-md-6">
-                <label asp-for="ApiKey" class="form-label">API Key</label>
-                <input asp-for="ApiKey" class="form-control" type="password" />
+                <label asp-for="OrganizationId" class="form-label">Organization ID</label>
+                <input asp-for="OrganizationId" class="form-control" placeholder="Opcional" />
+                <span asp-validation-for="OrganizationId" class="text-danger small"></span>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-6">
+                <label asp-for="ApiVersion" class="form-label">Versão da API</label>
+                <input asp-for="ApiVersion" class="form-control" placeholder="Ex: v1, 2024-02-15-preview" />
+                <span asp-validation-for="ApiVersion" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-sliders"></i>
+            Operação
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
                 <label asp-for="Priority" class="form-label">Prioridade</label>
                 <input asp-for="Priority" class="form-control" />
+                <div class="form-hint">Menor número pode representar maior prioridade.</div>
+                <span asp-validation-for="Priority" class="text-danger small"></span>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <label asp-for="TimeoutSeconds" class="form-label">Timeout</label>
                 <input asp-for="TimeoutSeconds" class="form-control" />
+                <div class="form-hint">Tempo máximo de resposta em segundos.</div>
+                <span asp-validation-for="TimeoutSeconds" class="text-danger small"></span>
             </div>
 
             <div class="col-md-4">
                 <label asp-for="RetryCount" class="form-label">Tentativas</label>
                 <input asp-for="RetryCount" class="form-control" />
+                <div class="form-hint">Quantidade de novas tentativas em caso de falha.</div>
+                <span asp-validation-for="RetryCount" class="text-danger small"></span>
             </div>
+        </div>
 
-            <div class="col-md-4">
-                <label asp-for="OrganizationId" class="form-label">Organization ID</label>
-                <input asp-for="OrganizationId" class="form-control" />
-            </div>
+        <hr class="divider-soft" />
 
-            <div class="col-md-4">
-                <label asp-for="ApiVersion" class="form-label">Versão da API</label>
-                <input asp-for="ApiVersion" class="form-control" />
-            </div>
+        <div class="form-section-title">
+            <i class="bi bi-stars"></i>
+            Capacidades do provedor
+        </div>
 
-            <div class="col-12 d-flex gap-4 mt-3">
-                <div class="form-check">
+        <div class="capability-grid">
+            <div class="capability-card">
+                <div class="form-check form-switch">
                     <input asp-for="SupportsStreaming" class="form-check-input" />
                     <label asp-for="SupportsStreaming" class="form-check-label">Streaming</label>
                 </div>
+            </div>
 
-                <div class="form-check">
+            <div class="capability-card">
+                <div class="form-check form-switch">
                     <input asp-for="SupportsVision" class="form-check-input" />
                     <label asp-for="SupportsVision" class="form-check-label">Visão</label>
                 </div>
+            </div>
 
-                <div class="form-check">
+            <div class="capability-card">
+                <div class="form-check form-switch">
                     <input asp-for="SupportsAudio" class="form-check-input" />
                     <label asp-for="SupportsAudio" class="form-check-label">Áudio</label>
                 </div>
+            </div>
 
-                <div class="form-check">
+            <div class="capability-card">
+                <div class="form-check form-switch">
                     <input asp-for="Active" class="form-check-input" />
                     <label asp-for="Active" class="form-check-label">Ativo</label>
                 </div>
@@ -84,8 +370,19 @@
         </div>
     </div>
 
-    <div class="card-footer d-flex justify-content-between">
-        <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
-        <button type="submit" class="btn btn-primary">Salvar</button>
+    <div class="premium-form-footer">
+        <a asp-area="Admin" asp-controller="AIProviders" asp-action="Index" class="btn btn-outline-secondary premium-btn">
+            <i class="bi bi-arrow-left"></i>
+            Voltar
+        </a>
+
+        <button type="submit" class="premium-btn premium-btn-primary">
+            <i class="bi bi-check2-circle"></i>
+            Salvar Provedor
+        </button>
     </div>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -4,43 +4,155 @@
     ViewData["Title"] = "Detalhes do Provedor";
 }
 
-<h1>Detalhes do Provedor</h1>
-
-<div class="card shadow-sm mt-4">
-    <div class="card-body">
-        <dl class="row">
-            <dt class="col-sm-3">Nome</dt>
-            <dd class="col-sm-9">@Model.DisplayName</dd>
-
-            <dt class="col-sm-3">Tipo</dt>
-            <dd class="col-sm-9">@Model.Type</dd>
-
-            <dt class="col-sm-3">Base URL</dt>
-            <dd class="col-sm-9">@Model.BaseUrl</dd>
-
-            <dt class="col-sm-3">Prioridade</dt>
-            <dd class="col-sm-9">@Model.Priority</dd>
-
-            <dt class="col-sm-3">Timeout</dt>
-            <dd class="col-sm-9">@Model.TimeoutSeconds segundos</dd>
-
-            <dt class="col-sm-3">Tentativas</dt>
-            <dd class="col-sm-9">@Model.RetryCount</dd>
-
-            <dt class="col-sm-3">Recursos</dt>
-            <dd class="col-sm-9">
-                Streaming: @Model.SupportsStreaming |
-                Visão: @Model.SupportsVision |
-                Áudio: @Model.SupportsAudio
-            </dd>
-
-            <dt class="col-sm-3">Status</dt>
-            <dd class="col-sm-9">@(Model.Active ? "Ativo" : "Inativo")</dd>
-        </dl>
+<section class="crud-hero">
+    <div class="crud-eyebrow">
+        <i class="bi bi-eye"></i>
+        Detalhes do provedor
     </div>
 
-    <div class="card-footer d-flex justify-content-between">
-        <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+    <h1 class="crud-title">@Model.DisplayName</h1>
+
+    <p class="crud-subtitle">
+        Visualize as configurações, prioridades, capacidades e status operacional
+        deste provedor de inteligência artificial.
+    </p>
+</section>
+
+<section class="premium-form-card">
+
+    <div class="premium-form-header">
+        <h2>Informações do provedor</h2>
+        <p>Dados utilizados para integração e operação da plataforma.</p>
     </div>
-</div>
+
+    <div class="premium-form-body">
+
+        <div class="form-section-title">
+            <i class="bi bi-fingerprint"></i>
+            Identificação
+        </div>
+
+        <div class="details-grid">
+
+            <div class="detail-card">
+                <span>Nome</span>
+                <strong>@Model.DisplayName</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Tipo</span>
+                <strong>@Model.Type</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Base URL</span>
+                <strong>@Model.BaseUrl</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Status</span>
+
+                @if (Model.Active)
+                {
+                    <span class="status-badge status-active">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Ativo
+                    </span>
+                }
+                else
+                {
+                    <span class="status-badge status-inactive">
+                        <i class="bi bi-x-circle-fill"></i>
+                        Inativo
+                    </span>
+                }
+
+            </div>
+
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-sliders"></i>
+            Configuração operacional
+        </div>
+
+        <div class="details-grid">
+
+            <div class="detail-card">
+                <span>Prioridade</span>
+                <strong>@Model.Priority</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Timeout</span>
+                <strong>@Model.TimeoutSeconds segundos</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Tentativas</span>
+                <strong>@Model.RetryCount</strong>
+            </div>
+
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-stars"></i>
+            Capacidades suportadas
+        </div>
+
+        <div class="capability-grid">
+
+            <div class="capability-card">
+                <span>Streaming</span>
+                <strong>@(Model.SupportsStreaming ? "Disponível" : "Indisponível")</strong>
+            </div>
+
+            <div class="capability-card">
+                <span>Visão</span>
+                <strong>@(Model.SupportsVision ? "Disponível" : "Indisponível")</strong>
+            </div>
+
+            <div class="capability-card">
+                <span>Áudio</span>
+                <strong>@(Model.SupportsAudio ? "Disponível" : "Indisponível")</strong>
+            </div>
+
+            <div class="capability-card">
+                <span>Status Operacional</span>
+                <strong>@(Model.Active ? "Ativo" : "Inativo")</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="premium-form-footer">
+
+        <a asp-area="Admin"
+           asp-controller="AIProviders"
+           asp-action="Index"
+           class="btn btn-outline-secondary premium-btn">
+
+            <i class="bi bi-arrow-left"></i>
+            Voltar
+
+        </a>
+
+        <a asp-area="Admin"
+           asp-controller="AIProviders"
+           asp-action="Edit"
+           asp-route-id="@Model.Id"
+           class="premium-btn premium-btn-primary">
+
+            <i class="bi bi-pencil-square"></i>
+            Editar Provedor
+
+        </a>
+
+    </div>
+
+</section>

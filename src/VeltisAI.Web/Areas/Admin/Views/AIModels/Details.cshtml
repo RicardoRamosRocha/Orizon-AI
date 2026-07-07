@@ -1,0 +1,127 @@
+@model VeltisAI.Domain.Entities.AIModel
+
+@{
+    ViewData["Title"] = "Detalhes do Modelo de IA";
+}
+
+<section class="crud-hero">
+    <div class="crud-eyebrow">
+        <i class="bi bi-eye"></i>
+        Detalhes do modelo
+    </div>
+
+    <h1 class="crud-title">@Model.Name</h1>
+
+    <p class="crud-subtitle">
+        Visualize as informações técnicas, limites operacionais, provedor vinculado,
+        precificação e status deste modelo de IA.
+    </p>
+</section>
+
+<section class="premium-form-card">
+    <div class="premium-form-header">
+        <h2>Informações do modelo</h2>
+        <p>Dados principais cadastrados para uso na infraestrutura Veltis AI.</p>
+    </div>
+
+    <div class="premium-form-body">
+        <div class="form-section-title">
+            <i class="bi bi-fingerprint"></i>
+            Identificação
+        </div>
+
+        <div class="details-grid">
+            <div class="detail-card">
+                <span>Nome</span>
+                <strong>@Model.Name</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Identificador</span>
+                <strong>@Model.Identifier</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Provedor</span>
+                <strong>@(Model.AIProvider?.DisplayName ?? "Sem provedor")</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Modalidade</span>
+                <strong>@Model.Modalities</strong>
+            </div>
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-speedometer2"></i>
+            Limites operacionais
+        </div>
+
+        <div class="details-grid">
+            <div class="detail-card">
+                <span>Janela de contexto</span>
+                <strong>@Model.ContextWindow tokens</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Máximo de tokens de saída</span>
+                <strong>@Model.MaxOutputTokens tokens</strong>
+            </div>
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-cash-coin"></i>
+            Precificação
+        </div>
+
+        <div class="details-grid">
+            <div class="detail-card">
+                <span>Input / 1M tokens</span>
+                <strong>@Model.InputTokenPricePerMillion</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Output / 1M tokens</span>
+                <strong>@Model.OutputTokenPricePerMillion</strong>
+            </div>
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title">
+            <i class="bi bi-toggle-on"></i>
+            Status
+        </div>
+
+        <div class="capability-grid">
+            <div class="capability-card">
+                <span>Status operacional</span>
+
+                @if (Model.Active)
+                {
+                    <strong>Ativo</strong>
+                }
+                else
+                {
+                    <strong>Inativo</strong>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="premium-form-footer">
+        <a asp-area="Admin" asp-controller="AIModels" asp-action="Index" class="btn btn-outline-secondary premium-btn">
+            <i class="bi bi-arrow-left"></i>
+            Voltar
+        </a>
+
+        <a asp-area="Admin" asp-controller="AIModels" asp-action="Edit" asp-route-id="@Model.Id" class="premium-btn premium-btn-primary">
+            <i class="bi bi-pencil-square"></i>
+            Editar Modelo
+        </a>
+    </div>
+</section>

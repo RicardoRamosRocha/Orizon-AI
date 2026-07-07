@@ -4,17 +4,144 @@
     ViewData["Title"] = "Excluir Provedor";
 }
 
-<h1>Excluir Provedor</h1>
+<section class="crud-hero crud-hero-danger">
+    <div class="crud-eyebrow">
+        <i class="bi bi-trash3"></i>
+        Excluir provedor
+    </div>
 
-<div class="alert alert-warning mt-4">
-    Tem certeza que deseja excluir o provedor <strong>@Model.DisplayName</strong>?
-</div>
+    <h1 class="crud-title">Remover Provedor de IA</h1>
 
-<form asp-action="Delete" method="post">
+    <p class="crud-subtitle">
+        Confirme a exclusão deste provedor. Esta ação pode impactar modelos,
+        integrações e chamadas configuradas na plataforma.
+    </p>
+</section>
+
+<form asp-area="Admin"
+      asp-controller="AIProviders"
+      asp-action="Delete"
+      method="post"
+      class="premium-form-card">
+
+    @Html.AntiForgeryToken()
+
     <input type="hidden" asp-for="Id" />
 
-    <div class="d-flex gap-2">
-        <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
-        <button type="submit" class="btn btn-danger">Excluir</button>
+    <div class="premium-form-header">
+        <h2>Confirmação de exclusão</h2>
+        <p>Revise os dados abaixo antes de remover o provedor.</p>
+    </div>
+
+    <div class="premium-form-body">
+        <div class="warning-box">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+            <div>
+                <strong>Atenção!</strong>
+                <p>Esta operação não poderá ser desfeita.</p>
+            </div>
+        </div>
+
+        <div class="form-section-title danger">
+            <i class="bi bi-cloud-slash"></i>
+            Provedor selecionado
+        </div>
+
+        <div class="details-grid">
+            <div class="detail-card">
+                <span>Nome</span>
+                <strong>@Model.DisplayName</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Tipo</span>
+                <strong>@Model.Type</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Base URL</span>
+                <strong>@Model.BaseUrl</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Prioridade</span>
+                <strong>@Model.Priority</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Timeout</span>
+                <strong>@Model.TimeoutSeconds segundos</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Tentativas</span>
+                <strong>@Model.RetryCount</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Status</span>
+
+                @if (Model.Active)
+                {
+                    <span class="status-badge status-active">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Ativo
+                    </span>
+                }
+                else
+                {
+                    <span class="status-badge status-inactive">
+                        <i class="bi bi-x-circle-fill"></i>
+                        Inativo
+                    </span>
+                }
+            </div>
+        </div>
+
+        <hr class="divider-soft" />
+
+        <div class="form-section-title danger">
+            <i class="bi bi-stars"></i>
+            Capacidades vinculadas
+        </div>
+
+        <div class="capability-grid">
+            <div class="capability-card">
+                <span>Streaming</span>
+                <strong>@(Model.SupportsStreaming ? "Disponível" : "Indisponível")</strong>
+            </div>
+
+            <div class="capability-card">
+                <span>Visão</span>
+                <strong>@(Model.SupportsVision ? "Disponível" : "Indisponível")</strong>
+            </div>
+
+            <div class="capability-card">
+                <span>Áudio</span>
+                <strong>@(Model.SupportsAudio ? "Disponível" : "Indisponível")</strong>
+            </div>
+
+            <div class="capability-card">
+                <span>Status Operacional</span>
+                <strong>@(Model.Active ? "Ativo" : "Inativo")</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="premium-form-footer">
+        <a asp-area="Admin"
+           asp-controller="AIProviders"
+           asp-action="Index"
+           class="btn btn-outline-secondary premium-btn">
+            <i class="bi bi-arrow-left"></i>
+            Cancelar
+        </a>
+
+        <button type="submit"
+                class="premium-btn premium-btn-danger">
+            <i class="bi bi-trash3"></i>
+            Excluir Provedor
+        </button>
     </div>
 </form>

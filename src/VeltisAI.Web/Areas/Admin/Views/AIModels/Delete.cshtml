@@ -4,55 +4,140 @@
     ViewData["Title"] = "Excluir Modelo de IA";
 }
 
-<h2>Excluir Modelo de IA</h2>
+<section class="crud-hero crud-hero-danger">
+    <div class="crud-eyebrow">
+        <i class="bi bi-trash3"></i>
+        Excluir modelo
+    </div>
 
-<div class="alert alert-danger">
-    Tem certeza que deseja excluir este modelo?
-</div>
+    <h1 class="crud-title">Remover Modelo de IA</h1>
 
-<dl class="row">
-    <dt class="col-sm-3">Nome</dt>
-    <dd class="col-sm-9">@Model.Name</dd>
-
-    <dt class="col-sm-3">Identificador</dt>
-    <dd class="col-sm-9">@Model.Identifier</dd>
-
-    <dt class="col-sm-3">Provedor</dt>
-    <dd class="col-sm-9">@Model.AIProvider?.DisplayName</dd>
-
-    <dt class="col-sm-3">Modalidade</dt>
-    <dd class="col-sm-9">@Model.Modalities</dd>
-
-    <dt class="col-sm-3">Status</dt>
-    <dd class="col-sm-9">
-        @if (Model.Active)
-        {
-            <span class="badge bg-success">Ativo</span>
-        }
-        else
-        {
-            <span class="badge bg-secondary">Inativo</span>
-        }
-    </dd>
-</dl>
+    <p class="crud-subtitle">
+        Confirme a exclusão deste modelo. Esta ação poderá impactar chamadas
+        realizadas através deste provedor.
+    </p>
+</section>
 
 <form asp-area="Admin"
       asp-controller="AIModels"
       asp-action="Delete"
-      method="post">
+      method="post"
+      class="premium-form-card">
 
     @Html.AntiForgeryToken()
 
     <input type="hidden" asp-for="Id" />
 
-    <button type="submit" class="btn btn-danger">
-        Excluir
-    </button>
+    <div class="premium-form-header">
+        <h2>Confirmação de exclusão</h2>
+        <p>Revise as informações antes de remover o modelo.</p>
+    </div>
 
-    <a asp-area="Admin"
-       asp-controller="AIModels"
-       asp-action="Index"
-       class="btn btn-secondary">
-        Cancelar
-    </a>
+    <div class="premium-form-body">
+
+        <div class="warning-box">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+
+            <div>
+                <strong>Atenção!</strong>
+
+                <p>
+                    Esta operação não poderá ser desfeita.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-section-title danger">
+            <i class="bi bi-cpu"></i>
+            Modelo selecionado
+        </div>
+
+        <div class="details-grid">
+
+            <div class="detail-card">
+                <span>Modelo</span>
+                <strong>@Model.Name</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Identificador</span>
+                <strong>@Model.Identifier</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Provedor</span>
+                <strong>@(Model.AIProvider?.DisplayName ?? "-")</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Modalidade</span>
+                <strong>@Model.Modalities</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Contexto</span>
+                <strong>@Model.ContextWindow tokens</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Máximo de saída</span>
+                <strong>@Model.MaxOutputTokens tokens</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Preço Input</span>
+                <strong>@Model.InputTokenPricePerMillion</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Preço Output</span>
+                <strong>@Model.OutputTokenPricePerMillion</strong>
+            </div>
+
+            <div class="detail-card">
+                <span>Status</span>
+
+                @if (Model.Active)
+                {
+                    <span class="status-badge status-active">
+                        <i class="bi bi-check-circle-fill"></i>
+                        Ativo
+                    </span>
+                }
+                else
+                {
+                    <span class="status-badge status-inactive">
+                        <i class="bi bi-x-circle-fill"></i>
+                        Inativo
+                    </span>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="premium-form-footer">
+
+        <a asp-area="Admin"
+           asp-controller="AIModels"
+           asp-action="Index"
+           class="btn btn-outline-secondary premium-btn">
+
+            <i class="bi bi-arrow-left"></i>
+            Cancelar
+
+        </a>
+
+        <button type="submit"
+                class="premium-btn premium-btn-danger">
+
+            <i class="bi bi-trash3"></i>
+            Excluir Modelo
+
+        </button>
+
+    </div>
+
 </form>

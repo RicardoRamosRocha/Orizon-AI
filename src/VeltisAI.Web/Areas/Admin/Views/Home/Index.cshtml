@@ -1,45 +1,74 @@
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Home";
 }
 
-<div class="container mt-4">
-    <h1 class="mb-4">Dashboard Veltis AI</h1>
+<section class="home-showcase">
+    <div class="home-hero">
+        <div class="home-hero-content">
+            <div class="crud-eyebrow">
+                <i class="bi bi-stars"></i>
+                Veltis AI Platform
+            </div>
 
-    <div class="row g-3">
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6>Clientes</h6>
-                    <h3>0</h3>
-                </div>
+            <h1 class="home-title">
+                A infraestrutura premium para empresas que querem operar IA com controle, escala e inteligência.
+            </h1>
+
+            <p class="home-subtitle">
+                Centralize provedores, modelos, créditos, planos, consumo e governança em uma plataforma SaaS moderna,
+                preparada para apresentações comerciais e operação real.
+            </p>
+
+            <div class="home-actions">
+                <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="premium-btn premium-btn-primary">
+                    <i class="bi bi-speedometer2"></i>
+                    Abrir Dashboard
+                </a>
+
+                <a asp-area="Admin" asp-controller="AIProviders" asp-action="Index" class="btn btn-outline-secondary premium-btn">
+                    <i class="bi bi-cloud-fill"></i>
+                    Ver Provedores
+                </a>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6>Planos</h6>
-                    <h3>0</h3>
-                </div>
+        <div class="home-ai-card">
+            <div class="ai-orb">
+                <i class="bi bi-robot"></i>
             </div>
-        </div>
 
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6>Assinaturas</h6>
-                    <h3>0</h3>
-                </div>
-            </div>
-        </div>
+            <h3>Veltis Assistant</h3>
+            <p>Pronto para ajudar na gestão da sua infraestrutura de IA.</p>
 
-        <div class="col-md-3">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h6>Créditos</h6>
-                    <h3>0</h3>
-                </div>
+            <div class="ai-message">
+                “Olá, Ricardo! Seus provedores estão prontos para operar.”
             </div>
         </div>
     </div>
-</div>
+
+    <div class="home-feature-grid">
+        <div class="home-feature-card">
+            <i class="bi bi-cloud-check-fill"></i>
+            <h3>Multi-provider</h3>
+            <p>Gerencie OpenAI, Gemini, Anthropic, Azure e novos provedores em um único painel.</p>
+        </div>
+
+        <div class="home-feature-card">
+            <i class="bi bi-cpu-fill"></i>
+            <h3>Modelos inteligentes</h3>
+            <p>Controle contexto, tokens, preços, modalidades e status de cada modelo.</p>
+        </div>
+
+        <div class="home-feature-card">
+            <i class="bi bi-coin"></i>
+            <h3>Créditos e consumo</h3>
+            <p>Base preparada para cobrança, planos, limites, uso por cliente e monetização.</p>
+        </div>
+
+        <div class="home-feature-card">
+            <i class="bi bi-shield-lock-fill"></i>
+            <h3>Governança SaaS</h3>
+            <p>Arquitetura pensada para multi-tenant, segurança, escalabilidade e controle.</p>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,389 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    .dashboard-hero {
+        position: relative;
+        overflow: hidden;
+        border-radius: 34px;
+        padding: 42px;
+        margin-bottom: 26px;
+        color: #fff;
+        background:
+            radial-gradient(circle at top right, rgba(37, 99, 235, .65), transparent 32%),
+            radial-gradient(circle at bottom left, rgba(124, 58, 237, .55), transparent 30%),
+            linear-gradient(135deg, #050816, #0f172a 48%, #020617);
+        box-shadow: 0 30px 90px rgba(15, 23, 42, .32);
+    }
+
+    .dashboard-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+        background-size: 42px 42px;
+        opacity: .55;
+    }
+
+    .dashboard-hero-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        gap: 28px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 8px 13px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.1);
+        border: 1px solid rgba(255,255,255,.18);
+        color: rgba(255,255,255,.82);
+        font-size: .78rem;
+        font-weight: 900;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+    }
+
+    .dashboard-title {
+        max-width: 780px;
+        margin: 0;
+        font-size: clamp(2.4rem, 5vw, 4.6rem);
+        font-weight: 950;
+        letter-spacing: -.075em;
+        line-height: .98;
+    }
+
+    .dashboard-title span {
+        background: linear-gradient(135deg, #93c5fd, #c4b5fd, #fff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .dashboard-subtitle {
+        max-width: 680px;
+        margin: 18px 0 0;
+        color: rgba(255,255,255,.68);
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+
+    .dashboard-glow-card {
+        min-width: 260px;
+        padding: 22px;
+        border-radius: 28px;
+        background: rgba(255,255,255,.09);
+        border: 1px solid rgba(255,255,255,.14);
+        backdrop-filter: blur(18px);
+    }
+
+    .dashboard-glow-card h3 {
+        margin: 0;
+        font-size: 2.3rem;
+        font-weight: 950;
+        letter-spacing: -.06em;
+    }
+
+    .dashboard-glow-card p {
+        margin: 6px 0 0;
+        color: rgba(255,255,255,.62);
+        font-weight: 700;
+    }
+
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        margin-bottom: 24px;
+    }
+
+    .dashboard-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(226, 232, 240, .95);
+        border-radius: 28px;
+        padding: 24px;
+        background: rgba(255,255,255,.9);
+        box-shadow: 0 24px 70px rgba(15, 23, 42, .08);
+        min-height: 160px;
+    }
+
+    .dashboard-card::after {
+        content: "";
+        position: absolute;
+        right: -32px;
+        top: -32px;
+        width: 110px;
+        height: 110px;
+        border-radius: 999px;
+        background: rgba(37, 99, 235, .1);
+    }
+
+    .dashboard-card-icon {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        color: #fff;
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        box-shadow: 0 16px 34px rgba(37, 99, 235, .22);
+        margin-bottom: 18px;
+    }
+
+    .dashboard-card-label {
+        color: #64748b;
+        font-size: .8rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+    }
+
+    .dashboard-card-value {
+        margin-top: 8px;
+        color: #0f172a;
+        font-size: 2.25rem;
+        font-weight: 950;
+        letter-spacing: -.06em;
+        line-height: 1;
+    }
+
+    .dashboard-card-hint {
+        margin-top: 10px;
+        color: #64748b;
+        font-size: .86rem;
+        font-weight: 650;
+    }
+
+    .dashboard-panels {
+        display: grid;
+        grid-template-columns: 1.35fr .65fr;
+        gap: 22px;
+    }
+
+    .dashboard-panel {
+        border: 1px solid rgba(226, 232, 240, .95);
+        border-radius: 30px;
+        padding: 26px;
+        background: rgba(255,255,255,.9);
+        box-shadow: 0 24px 70px rgba(15, 23, 42, .08);
+    }
+
+    .dashboard-panel h2 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 1.2rem;
+        font-weight: 950;
+        letter-spacing: -.035em;
+    }
+
+    .dashboard-panel p {
+        margin: 6px 0 22px;
+        color: #64748b;
+        font-size: .92rem;
+    }
+
+    .showcase-strip {
+        display: grid;
+        gap: 14px;
+    }
+
+    .showcase-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px;
+        border-radius: 22px;
+        background: #f8fafc;
+        border: 1px solid #eef2f7;
+    }
+
+    .showcase-item i {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        color: #2563eb;
+        background: #eff6ff;
+        font-size: 1.1rem;
+    }
+
+    .showcase-item strong {
+        display: block;
+        color: #0f172a;
+        font-weight: 900;
+    }
+
+    .showcase-item span {
+        color: #64748b;
+        font-size: .86rem;
+    }
+
+    .pulse-orb {
+        height: 260px;
+        border-radius: 30px;
+        display: grid;
+        place-items: center;
+        background:
+            radial-gradient(circle, rgba(37,99,235,.26), transparent 34%),
+            radial-gradient(circle at bottom, rgba(124,58,237,.22), transparent 38%),
+            #f8fafc;
+        border: 1px solid #eef2f7;
+    }
+
+    .pulse-core {
+        width: 112px;
+        height: 112px;
+        border-radius: 34px;
+        display: grid;
+        place-items: center;
+        color: #fff;
+        background: linear-gradient(135deg, #2563eb, #7c3aed);
+        box-shadow: 0 26px 60px rgba(37, 99, 235, .35);
+        font-size: 2.6rem;
+    }
+
+    @@media (max-width: 1100px) {
+        .dashboard-grid,
+        .dashboard-panels {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .dashboard-grid,
+        .dashboard-panels {
+            grid-template-columns: 1fr;
+        }
+
+        .dashboard-hero {
+            padding: 30px;
+        }
+    }
+</style>
+
+<section class="dashboard-hero">
+    <div class="dashboard-hero-content">
+        <div>
+            <div class="dashboard-eyebrow">
+                <i class="bi bi-stars"></i>
+                Veltis AI Platform
+            </div>
+
+            <h1 class="dashboard-title">
+                Infraestrutura premium para <span>gerenciar IA em escala.</span>
+            </h1>
+
+            <p class="dashboard-subtitle">
+                Centralize provedores, modelos, clientes, créditos, planos e consumo em uma plataforma SaaS moderna,
+                preparada para operação comercial, controle financeiro e expansão multi-tenant.
+            </p>
+        </div>
+
+        <div class="dashboard-glow-card">
+            <h3>Demo</h3>
+            <p>Ambiente preparado para apresentação comercial.</p>
+        </div>
+    </div>
+</section>
+
+<section class="dashboard-grid">
+    <div class="dashboard-card">
+        <div class="dashboard-card-icon">
+            <i class="bi bi-people-fill"></i>
+        </div>
+        <div class="dashboard-card-label">Clientes</div>
+        <div class="dashboard-card-value">0</div>
+        <div class="dashboard-card-hint">Empresas conectadas à plataforma.</div>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="dashboard-card-icon">
+            <i class="bi bi-layers-fill"></i>
+        </div>
+        <div class="dashboard-card-label">Planos</div>
+        <div class="dashboard-card-value">0</div>
+        <div class="dashboard-card-hint">Pacotes comerciais disponíveis.</div>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="dashboard-card-icon">
+            <i class="bi bi-credit-card-2-front-fill"></i>
+        </div>
+        <div class="dashboard-card-label">Assinaturas</div>
+        <div class="dashboard-card-value">0</div>
+        <div class="dashboard-card-hint">Contratos ativos na operação.</div>
+    </div>
+
+    <div class="dashboard-card">
+        <div class="dashboard-card-icon">
+            <i class="bi bi-coin"></i>
+        </div>
+        <div class="dashboard-card-label">Créditos</div>
+        <div class="dashboard-card-value">0</div>
+        <div class="dashboard-card-hint">Saldo operacional da plataforma.</div>
+    </div>
+</section>
+
+<section class="dashboard-panels">
+    <div class="dashboard-panel">
+        <h2>Visão estratégica da plataforma</h2>
+        <p>Principais pilares que demonstram o valor comercial da Veltis AI.</p>
+
+        <div class="showcase-strip">
+            <div class="showcase-item">
+                <i class="bi bi-cloud-check-fill"></i>
+                <div>
+                    <strong>Multi-provider</strong>
+                    <span>Controle centralizado de OpenAI, Anthropic, Gemini, Azure e novos provedores.</span>
+                </div>
+            </div>
+
+            <div class="showcase-item">
+                <i class="bi bi-cpu-fill"></i>
+                <div>
+                    <strong>Catálogo de modelos</strong>
+                    <span>Modelos organizados por provedor, modalidade, preço, contexto e status.</span>
+                </div>
+            </div>
+
+            <div class="showcase-item">
+                <i class="bi bi-bar-chart-fill"></i>
+                <div>
+                    <strong>Consumo e monetização</strong>
+                    <span>Base preparada para tokens, créditos, planos, faturas e relatórios.</span>
+                </div>
+            </div>
+
+            <div class="showcase-item">
+                <i class="bi bi-shield-lock-fill"></i>
+                <div>
+                    <strong>Operação SaaS</strong>
+                    <span>Administração segura, escalável e pronta para crescimento multi-tenant.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-panel">
+        <h2>Núcleo Veltis</h2>
+        <p>Camada central de inteligência, controle e governança.</p>
+
+        <div class="pulse-orb">
+            <div class="pulse-core">
+                <i class="bi bi-lightning-charge-fill"></i>
+            </div>
+        </div>
+    </div>
+</section>
