@@ -1,0 +1,56 @@
+{
+  "name": "Orizon AI - .NET 8 + PostgreSQL",
+
+  "dockerComposeFile": "docker-compose.yml",
+
+  "service": "app",
+
+  "workspaceFolder": "/workspaces/Orizon-AI",
+
+  "shutdownAction": "stopCompose",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "ms-azuretools.vscode-docker",
+        "eamodio.gitlens",
+        "humao.rest-client",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg"
+      ],
+      "settings": {
+        "dotnet.defaultSolution": "OrizonAI.sln",
+        "editor.formatOnSave": true,
+        "files.trimTrailingWhitespace": true,
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+
+  "forwardPorts": [
+    5000,
+    5001,
+    5432
+  ],
+
+  "portsAttributes": {
+    "5000": {
+      "label": "Orizon AI HTTP",
+      "onAutoForward": "notify"
+    },
+    "5001": {
+      "label": "Orizon AI HTTPS",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+
+  "remoteUser": "vscode"
+}
